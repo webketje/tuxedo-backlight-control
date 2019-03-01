@@ -1,0 +1,6 @@
+if [ -f '/usr/local/bin/backlight' ]; then
+    sudo unlink /usr/local/bin/backlight
+fi
+if [ -f '/usr/share/applications/tuxedo-backlight-control.desktop' ]; then
+    sudo unlink '/usr/share/applications/tuxedo-backlight-control.desktop'
+fi

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo ln -s -f /usr/share/tuxedo-backlight-control/bin/backlight /usr/local/bin
+sudo mv -f /usr/share/tuxedo-backlight-control/tuxedo-backlight-control.desktop /usr/share/applications/tuxedo-backlight-control.desktop

@@ -1,0 +1,8 @@
+breathe='mode=1'
+color='mode=0'
+cycle='mode=2'
+dance='mode=3'
+flash='mode=4'
+random='mode=5'
+tempo='mode=6'
+wave='mode=7'
