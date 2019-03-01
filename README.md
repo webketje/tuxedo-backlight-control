@@ -2,7 +2,7 @@
 Minimal Linux distro CLI &amp; UI for TUXEDO / Clevo computers Keyboard Backlight
 
 This utility automates toggling keyboard backlight state for Tuxedo/ Clevo computers on Linux.
-It can toggle the keyboard backlight off, set any modes defined [here](https://github.com/tuxedocomputers/tuxedo-keyboard#modes) and set a single-color subset from the `custom` mode
+It can toggle the keyboard backlight off, set any modes defined [here](https://github.com/tuxedocomputers/tuxedo-keyboard#modes) and set a single-color subset from the `custom` mode.  
 Available colors can be found [here](https://www.cssportal.com/html-colors/orig-16-colors.php).
 
 ## Usage
@@ -17,6 +17,7 @@ Search for *Tuxedo Backlight Control* from the <kbd>Super</kbd> (Start) menu.
 
 ```
 backlight <command> [<option>]
+```
 
 ```
 Usage:
