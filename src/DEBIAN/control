@@ -1,6 +1,6 @@
 Source: tuxedo-backlight-control
 Package: tuxedo-backlight-control
-Version: 0.1
+Version: 0.2
 Maintainer: Kevin Van Lierde
 Architecture: all
 Description: Tuxedo Backlight Control
@@ -9,4 +9,4 @@ Description: Tuxedo Backlight Control
 Section: utils/contrib
 Priority: optional
 Recommends: python3, python3-tk
-Installed-Size: 50
+Installed-Size: 52

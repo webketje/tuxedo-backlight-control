@@ -2,14 +2,13 @@
 
 package='Tuxedo Backlight Control <tuxedo-backlight-control>'
 version='0.1'
-date='2019-03-05'
+date='2019-04-25'
 author='Kevin Van Lierde <kevin.van.lierde@gmail.com>'
 conf_path='/etc/modprobe.d/tuxedo_keyboard.conf'
-
-opt="$1"
-color="$2"
+module_path='/sys/module/tuxedo_keyboard'
 
 # see https://github.com/tuxedocomputers/tuxedo-keyboard
+
 declare -A opts
 opts['breathe']='mode=1'
 opts['cycle']='mode=2'
@@ -22,8 +21,8 @@ opts['off']='state=0'
 opts['color']='mode=0'
 
 # see https://www.cssportal.com/html-colors/orig-16-colors.php
-declare -A colors
 
+declare -A colors
 colors['white']='FFFFFF'
 colors['yellow']='FFFF00'
 colors['fuchsia']='FF00FF'
@@ -45,14 +44,20 @@ colors['pink']='FFC0CB'
 colors['turquoise']='40E0D0'
 
 
-if [ ! -f $conf_path ]
+if [ ! -e $conf_path ]
   then
     echo "Cannot start tuxedo-backlight-control:"
     echo "tuxedo_keyboard conf not found at $conf_path."
     exit
 fi
 
-if [ $opt == '--help' ] || [ $opt == '-h' ]
+opt="$1"
+color_left="$2"
+color_center="$color_left"
+color_right="$color_left"
+color_extra="$color_left"
+
+if [ "$opt" == '--help' ] || [ "$opt" == '-h' ]
   then
     echo -ne '\n'
     echo "$package - v$version - $date"
@@ -73,6 +78,7 @@ if [ $opt == '--help' ] || [ $opt == '-h' ]
     echo '                      fuchsia, purple, rose, cyan, turquoise, teal, blue, navy,'
     echo '                      olive, lime, green'
     echo -ne '\n'
+    echo 'Report bugs at https://github.com/webketje/tuxedo-backlight-control/issues'
     echo 'For info on the tuxedo_keyboard kernel module, see https://github.com/tuxedocomputers/tuxedo-keyboard'
     echo -ne '\n'
     exit
@@ -98,22 +104,57 @@ if [ "$opt" == 'ui' ]
         exit
 fi
 
-if [ "$opt" == 'color' ] && ([ ! "$color" ] || [ ! ${colors[${color}]} ])
+if [ ! "$opt" ] || [ ! ${opts[${opt}]} ]
   then
-    echo 'No or invalid color provided for keyboard backlight'
+    echo 'backlight: No or invalid option provided for keyboard backlight'
     exit
-elif [ ! "$opt" ] || [ ! ${opts[${opt}]} ]
+elif [ "$opt" == 'color' ]
   then
-    echo 'No or invalid option provided for keyboard backlight'
-    exit
+    if [ ! "$color_left" ] || [ ! ${colors[${color_left}]} ]
+      then
+        echo 'backlight: No or invalid color provided for keyboard backlight'
+        exit
+    elif [ "$3" ] && [ ! "$4" ]
+      then 
+        echo 'backlight: Please provide a single or 3 colors (left, center, right)'
+        exit
+    elif [ "$3" ] && [ "$4" ]
+      then
+        if [ ! ${colors[${3}]} ]
+          then 
+            echo "backlight: '$3' is not a supported color"
+            exit
+        elif [ ! ${colors[${4}]} ]
+          then
+            echo "backlight: '$4' is not a supported color"
+            exit
+        else
+          color_center="$3"
+          color_right="$4"
+        fi
+
+        if [ "$5" ]
+          then
+            if [ ! ${colors[${5}]} ]
+              then
+                echo "backlight: '$4' is not a supported color"
+                exit
+            else
+              color_extra="$5"
+            fi
+        fi
+
+    fi
 fi
 
-
-eval 'sudo rmmod tuxedo_keyboard'
+if [ -e $module_path ]
+  then
+    eval 'sudo rmmod tuxedo_keyboard'
+fi
 
 if [ "$opt" == 'color' ]
   then
-    eval "echo \"options tuxedo_keyboard ${opts[${opt}]} color_left=0x${colors[${color}]} color_center=0x${colors[${color}]} color_right=0x${colors[${color}]}\" > /etc/modprobe.d/tuxedo_keyboard.conf"
+    eval "echo \"options tuxedo_keyboard ${opts[${opt}]} color_left=0x${colors[${color_left}]} color_center=0x${colors[${color_center}]} color_right=0x${colors[${color_right}]} color_extra=0x${colors[${color_extra}]}\" > /etc/modprobe.d/tuxedo_keyboard.conf"
 else
   eval "echo \"options tuxedo_keyboard ${opts[${opt}]}\" > /etc/modprobe.d/tuxedo_keyboard.conf"
 fi
