@@ -44,10 +44,6 @@ class BacklightManager():
            labels.append(cmd.capitalize())
         return labels
 
-    def is_color():
-        if 'mode' in self.config['current'].keys():
-            return self.config['current'].getint('mode') == 0
-
     def is_off(self):
         if 'state' in self.config['current'].keys():
             return self.config['current'].getint('state') == 0
@@ -55,6 +51,9 @@ class BacklightManager():
     def mode(self):
         if 'mode' in self.config['current'].keys():
             return self.config['current'].getint('mode')
+
+    def is_color(self):
+        return self.mode() == 0
 
     def color(self):
         if 'color_left' not in self.config['current'].keys():
@@ -79,6 +78,7 @@ class Window(tk.Frame):
         self.master.geometry('280x150')
         self.master.wm_iconbitmap('@/usr/share/tuxedo-backlight-control/icon.xbm')
         self.backlight = BacklightManager()
+        print(self.backlight.is_off())
         self.initialize_user_interface()
 
     def close(self):
@@ -88,23 +88,25 @@ class Window(tk.Frame):
         self.backlight.set_command('off')
 
         # side effects
-        self.off_button.configure(state='disabled', relief='sunken')
+        self.toggle_off_button(False)
         self.colors.configure(state='disabled')
         self.selected_color.set('Select...')
         self.selected_option.set('Select...')
 
-    def toggle_off_button(self, **enabled):
-        backlight_state_off = {
+    def toggle_off_button(self, enabled):
+        backlight_state_both = {
             'text'   : 'Backlight off',
+            'command': self.on_backlight_off,
+        }
+        backlight_state_off = {
+            **backlight_state_both,
             'relief' : 'sunken',
             'state'  : 'disabled',
-            'command': self.on_backlight_off
         }
         backlight_state_on = {
-            'text'   : 'Backlight off',
+            **backlight_state_both,
             'relief' : 'raised',
             'state'  : 'normal',
-            'command': self.on_backlight_off
         }
 
         if not enabled:
@@ -119,7 +121,7 @@ class Window(tk.Frame):
         self.entry=tk.Entry(self.master)
 
         self.off_button = tk.Button(self.footer_frame)
-        self.toggle_off_button(enabled=self.backlight.is_off())
+        self.toggle_off_button(not self.backlight.is_off())
 
         self.off_button.pack(side=tk.LEFT, anchor="w")
         self.close_button=tk.Button(self.footer_frame, text='Close', relief="groove", command=self.close)
@@ -183,7 +185,6 @@ class Window(tk.Frame):
 
         if sel_opt == 'Color':
             self.colors.configure(state = 'normal')
-            self.toggle_off_button(enabled=False)
         else:
             self.colors.configure(state = 'disabled')
             self.toggle_off_button(enabled=True)
