@@ -15,10 +15,9 @@ class App(ttk.Frame):
     def __init__(self, parent):
         ttk.Frame.__init__(self, parent)
         self.init_ttk_style()
-
         self.parent = parent
         self.parent.title('Tuxedo Backlight Ctrl')
-        self.parent.wm_iconbitmap('@/usr/share/tuxedo-backlight-control/icon.xbm')
+        self.parent.iconphoto(parent._w, tk.PhotoImage(file='/usr/share/tuxedo-backlight-control/icon.png'))
         self.parent.resizable(width=False, height=False)
         self.parent.grid(widthInc=8, heightInc=8, baseHeight=5, baseWidth=40)
         self.parent.grid_columnconfigure(0, weight=1, pad=2)

@@ -2,9 +2,6 @@ import os
 from io import StringIO
 from colors import colors
 
-dirname = os.path.dirname(__file__)
-
-
 class BacklightControl():
     DEVICE_PATH = '/sys/devices/platform/tuxedo_keyboard/'
     MODULE_PATH = '/sys/module/tuxedo_keyboard'
