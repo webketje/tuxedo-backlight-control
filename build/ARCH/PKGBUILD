@@ -1,0 +1,11 @@
+# Maintainer: Kevin Van Lierde <kevin.van.lierde@gmail.com>
+
+pkgname=tuxedo-backlight-control
+pkgrel=1
+pkgver=0.3
+arch=('i686' 'x86_64')
+license=('MIT')
+url=https://github.com/webketje/tuxedo-backlight-control
+pkgdesc='GUI Utility built on top of TUXEDO Computers Kernel module for keyboard backlighting.'
+depends=('python3' 'python3-tk' 'policykit-1')
+install='tuxedo-backlight-control.install'

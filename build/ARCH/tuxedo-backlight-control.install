@@ -1,0 +1,21 @@
+post_install() {
+  install_dir=/usr/share/tuxedo-backlight-control/
+
+  chmod +x ${install_dir}backlight.py
+  chmod +x ${install_dir}ui.py
+  mv -f ${install_dir}policy.xml /usr/share/polkit-1/actions/webketje.tuxedo-backlight-control.policy
+  ln -s -f -T ${install_dir}backlight.py /usr/local/bin/backlight
+  mv -f ${install_dir}tuxedo-backlight-control.desktop /usr/share/applications/tuxedo-backlight-control.desktop
+}
+
+pre_remove() {
+  if [ -e '/usr/local/bin/backlight' ]; then
+      unlink /usr/local/bin/backlight
+  fi
+  if [ -f '/usr/share/applications/tuxedo-backlight-control.desktop' ]; then
+      unlink '/usr/share/applications/tuxedo-backlight-control.desktop'
+  fi
+  if [ -f '/usr/share/polkit-1/actions/webketje.tuxedo-backlight-control.policy' ]; then
+      unlink '/usr/share/polkit-1/actions/webketje.tuxedo-backlight-control.policy'
+  fi
+}
