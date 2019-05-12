@@ -1,9 +1,9 @@
 [Desktop Entry]
 Name=Tuxedo Backlight Control
 Comment=Minimal backlight CLI & Python UI
-Exec=/usr/share/tuxedo-backlight-control/bin/backlight ui standalone
-Path=/usr/share/tuxedo-backlight-control/bin
+Exec=/usr/share/tuxedo-backlight-control/ui.py
+Path=/usr/share/tuxedo-backlight-control
 Icon=/usr/share/tuxedo-backlight-control/icon.png
-Terminal=true
+Terminal=False
 Type=Application
 Categories=Settings;HardwareSettings;

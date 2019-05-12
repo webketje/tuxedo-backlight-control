@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/pkexec /usr/bin/python3
 
 import tkinter as tk
 from tkinter import ttk
@@ -48,7 +48,7 @@ class App(ttk.Frame):
         )
 
         self.values = dict(
-            mode = tk.StringVar(self, value = backlight.mode.capitalize()),
+            mode = tk.StringVar(self, value = backlight.mode.capitalize() if backlight.state else 'Select...'),
             color_mode = tk.StringVar(self, value = self.color_mode),
             color_left = tk.StringVar(self, value = backlight.color_left.capitalize()),
             color_center = tk.StringVar(self, value = backlight.color_center.capitalize()),
@@ -94,8 +94,10 @@ class App(ttk.Frame):
         self.labels['mode'].grid(column=0, row=0, sticky='EW')
         self.widgets['mode'].grid(column=1, row=0, sticky='EW', padx=10)
         self.init_footer()
-        self.init_mode(backlight.mode)
-        self.backlight_toggle()
+        
+        if backlight.state == 1:
+            self.init_mode(backlight.mode)
+        self.backlight_off()
 
     def init_ttk_style(self):
         ttkStyle = ttk.Style()
@@ -216,21 +218,22 @@ class App(ttk.Frame):
         backlight.color_left = value.lower()
 
 
-    def backlight_toggle(self):
-        if backlight.state == 1:
-            self.offButton.configure(state='disabled')
-            backlight.state = 0
-            self.values['mode'].set('Select...')
-            self.hide_colors()
+    def backlight_off(self):
+        self.offButton.configure(state='disabled')
+        backlight.state = 0
+        self.mode = 'Select...'
+        self.hide_colors()
 
 
     def init_footer(self):
         state = 'disabled' if not backlight.state else 'enabled'
-        self.offButton = ttk.Button(self.bgFrame, text="Backlight off", command=self.backlight_toggle, state=state)
+        self.offButton = ttk.Button(self.bgFrame, text="Backlight off", command=self.backlight_off, state=state)
         self.offButton.grid(sticky=tk.E, column=1, row=6, padx=10, pady=10)
 
+def init():
+    root = tk.Tk()
+    App(root)
+    root.mainloop()
 
 if __name__ == '__main__':
-    root = tk.Tk()
-    run = App(root)
-    root.mainloop()
+    init()

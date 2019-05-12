@@ -1,4 +1,7 @@
-#!/bin/bash
+install_dir=/usr/share/tuxedo-backlight-control/
 
-sudo ln -s -f /usr/share/tuxedo-backlight-control/bin/backlight /usr/local/bin
-sudo mv -f /usr/share/tuxedo-backlight-control/tuxedo-backlight-control.desktop /usr/share/applications/tuxedo-backlight-control.desktop
+chmod +x ${install_dir}backlight.py
+chmod +x ${install_dir}ui.py
+mv -f ${install_dir}policy.xml /usr/share/polkit-1/actions/webketje.tuxedo-backlight-control.policy
+ln -s -f -T ${install_dir}backlight.py /usr/local/bin/backlight
+mv -f ${install_dir}tuxedo-backlight-control.desktop /usr/share/applications/tuxedo-backlight-control.desktop

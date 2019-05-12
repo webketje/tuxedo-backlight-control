@@ -1,6 +1,9 @@
-if [ -f '/usr/local/bin/backlight' ]; then
-    sudo unlink /usr/local/bin/backlight
+if [ -e '/usr/local/bin/backlight' ]; then
+    unlink /usr/local/bin/backlight
 fi
 if [ -f '/usr/share/applications/tuxedo-backlight-control.desktop' ]; then
-    sudo unlink '/usr/share/applications/tuxedo-backlight-control.desktop'
+    unlink '/usr/share/applications/tuxedo-backlight-control.desktop'
+fi
+if [ -f '/usr/share/polkit-1/actions/webketje.tuxedo-backlight-control.policy' ]; then
+    unlink '/usr/share/polkit-1/actions/webketje.tuxedo-backlight-control.policy'
 fi

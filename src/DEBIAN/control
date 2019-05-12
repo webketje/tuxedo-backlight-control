@@ -8,5 +8,5 @@ Description: Tuxedo Backlight Control
   It provides a bash CLI and a minimal Python UI.
 Section: utils/contrib
 Priority: optional
-Recommends: python3, python3-tk
+Recommends: python3, python3-tk, polkit-1
 Installed-Size: 52
