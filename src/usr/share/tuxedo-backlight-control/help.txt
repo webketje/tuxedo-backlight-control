@@ -1,0 +1,25 @@
+
+Tuxedo Backlight Control <tuxedo-backlight-control> - v0.3 - 2019-05-12
+By Kevin Van Lierde <kevin.van.lierde@gmail.com>
+
+Usage:
+    -h, --help            Display this message
+
+    ui                    Start the Tuxedo Backlight Control UI
+
+    off                   Turn off keyboard backlight
+
+    <mode>                Set the keyboard backlight to <mode>, one of:
+                          breathe, cycle, dance, flash, random, tempo, wave
+
+    color  <color>{1,4}   Set the keyboard backlight to a single color, one of:
+                          white, silver, gray, yellow, orange, red, maroon, crimson,
+                          fuchsia, purple, rose, cyan, turquoise, teal, blue, navy,
+                          olive, lime, green
+
+                          Alternatively, set the keyboard to x (1-4) distinct colors,
+                          in the order: left, center, right, extra. Only regions supported
+                          by your keyboard will have effect.
+                      
+Report bugs at https://github.com/webketje/tuxedo-backlight-control/issues'
+For info on the tuxedo_keyboard kernel module, see https://github.com/tuxedocomputers/tuxedo-keyboard

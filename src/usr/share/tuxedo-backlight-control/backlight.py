@@ -1,6 +1,12 @@
+#!/usr/bin/pkexec /usr/bin/python3
+
 import os
+from sys import argv
 from io import StringIO
 from colors import colors
+import subprocess
+
+sd = os.path.dirname(os.path.realpath(__file__))
 
 class BacklightControl():
     DEVICE_PATH = '/sys/devices/platform/tuxedo_keyboard/'
@@ -68,7 +74,7 @@ class BacklightControl():
     @staticmethod
     def set_single_color(color):
         for region in BacklightControl.regions:
-            BacklightControl.set_device_color(region, color)
+            BacklightControl.set_device_param('color_' + region, BacklightControl.find_color_by_key(color))
 
     @staticmethod
     def capitalize(label):
@@ -93,7 +99,6 @@ class BacklightControl():
 
     @mode.setter
     def mode(self, value):
-        print(value)
         index = BacklightControl.modes.index(value)
         BacklightControl.set_device_param('mode', index)
 
@@ -131,8 +136,29 @@ class BacklightControl():
 
     def display_modes(self):
         return map(BacklightControl.capitalize, self.modes)
-
+ 
     def display_colors(self):
         return map(BacklightControl.capitalize, self.colors.keys())
 
 backlight = BacklightControl()
+
+if __name__ == '__main__' and len(argv) > 1:
+    cmd = argv[1]
+    if cmd == '--help' or cmd == '-h':
+        print(sd)
+        with open(sd + '/help.txt', 'r') as fin:
+            print(fin.read())
+    elif cmd == 'ui':
+        subprocess.call(['/usr/share/tuxedo-backlight-control/ui.py'])
+    elif cmd == 'off':
+        backlight.state = 0
+    elif len(argv) == 2 and cmd in backlight.modes:
+        backlight.state = 1
+        backlight.mode = cmd
+    elif len(argv) == 3 and cmd == 'color' and argv[2] in list(BacklightControl.colors.keys()):
+        backlight.state = 1
+        backlight.set_single_color(argv[2])
+    elif len(argv) == 6:
+        backlight.state = 1
+        for index, region in enumerate(backlight.regions):
+            setattr(backlight, 'color_' + region, argv[2 + index])
