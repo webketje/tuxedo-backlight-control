@@ -1,16 +1,13 @@
 Source: tuxedo-backlight-control
 Package: tuxedo-backlight-control
 Version: 0.3
-Standards-Version: 0.3
-Maintainer: Kevin Van Lierde
+Maintainer: Kevin Van Lierde <kevin.van.lierde@gmail.com>
 Architecture: all
-Description: Tuxedo Backlight Control
-  This utility is built on top of TUXEDO Computers Kernel module for keyboard backlighting: (https://github.com/tuxedocomputers/tuxedo-keyboard) for Debian-based systems.
-  It provides a bash CLI and a minimal Python UI.
-Section: utils/contrib
+Description: Tuxedo Backlight Ctrl
+ Utility built on top of TUXEDO Kernel module for keyboard backlighting
+ (https://github.com/tuxedocomputers/tuxedo-keyboard) for Debian-based systems.
+ It provides a bash CLI and a minimal Python UI.
+Section: contrib/utils
 Priority: optional
 Depends: python3, python3-tk, policykit-1
 Installed-Size: 52
-Package-Type: deb
-Vcs-Browser: https://github.com/webketje/tuxedo-backlight-control
-Vcs-Git: https://github.com/webketje/tuxedo-backlight-control.git
