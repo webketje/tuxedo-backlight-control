@@ -36,8 +36,11 @@ class BacklightControl():
     def get_device_color(region):
         color = BacklightControl.get_device_param('color_' + region)
         if color:
-            index = list(BacklightControl.colors.values()).index(color.strip().upper())
-            return list(BacklightControl.colors.keys())[index]
+            try:
+              index = list(BacklightControl.colors.values()).index(color.strip().upper())
+              return list(BacklightControl.colors.keys())[index]
+            except Exception:
+              return 'Select...'
 
     @staticmethod
     def set_device_param(prop, value):
