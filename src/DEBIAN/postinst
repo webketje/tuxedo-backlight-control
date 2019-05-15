@@ -1,3 +1,8 @@
+#!/bin/bash
+
+# error logging
+set -e
+
 install_dir=/usr/share/tuxedo-backlight-control/
 
 chmod +x ${install_dir}backlight.py

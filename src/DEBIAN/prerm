@@ -1,3 +1,8 @@
+#!/bin/bash
+
+# error logging
+set -e
+
 if [ -e '/usr/local/bin/backlight' ]; then
     unlink /usr/local/bin/backlight
 fi
