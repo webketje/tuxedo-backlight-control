@@ -4,24 +4,68 @@ else
   rm -rf dist/*
 fi
 
+find src -type d -exec chmod 755 {} \;
+find src -type f -exec chmod 644 {} \;
+find build/DEBIAN -type f -exec chmod 755 {} \;
+
+pkg='tuxedo-backlight-control'
+ver='0.3'
+maintainer='Kevin Van Lierde <kevin.van.lierde@gmail.com>'
+url='https://github.com/webketje/tuxedo-backlight-control'
+prerm='../build/DEBIAN/prerm'
+postinst='../build/DEBIAN/postinst'
+category='contrib/utils'
+desc='Utility built on top of TUXEDO Kernel module for keyboard backlighting
+ (https://github.com/tuxedocomputers/tuxedo-keyboard) for Debian-based systems.
+ It provides a bash CLI and a minimal Python UI.'
+
+cd src
+
+fpm -s dir\
+  -t pacman\
+  -f\
+  -n "$pkg"\
+  -v "$ver"\
+  -a any\
+  --iteration 1\
+  --maintainer "$maintainer"\
+  --url "$url"\
+  --description "$desc"\
+  --category "$category"\
+  --license MIT\
+  --depends python\
+  --depends tk\
+  --depends polkit\
+  --after-install "$postinst"\
+  --before-remove "$prerm"\
+  usr
+
+mv "$pkg-$ver-1-any.pkg.tar.xz" "../dist/$pkg-$ver-1-any.pkg.tar.xz"
+
+fpm -s dir\
+  -t rpm\
+  -f\
+  -n "$pkg"\
+  -v "$ver"\
+  -a any\
+  --iteration 1\
+  --maintainer "$maintainer"\
+  --url "$url"\
+  --description "$desc"\
+  --category "$category"\
+  --license MIT\
+  --depends python\
+  --depends tk\
+  --depends polkit\
+  --after-install "$postinst"\
+  --before-remove "$prerm"\
+  usr
+
+mv "$pkg-$ver-1.any.rpm" "../dist/$pkg-$ver-1.any.rpm"
+
 # Debian & derivatives
-dpkg-deb -b src dist/tuxedo-backlight-control.deb
+cd ..
 
-# Arch Linux - unfortunately makepkg doesn't work properly on debian
-# we need to manually create the tar
-
-export PACKAGER='Kevin Van Lierde <kevin.van.lierde@gmail.com>'
-cd build/ARCH
-makepkg -f --nodeps --skipinteg
-cd ../..
-mv -T build/ARCH/pkg/tuxedo-backlight-control dist/pkg
-cp -r -T src/usr dist/pkg/usr
-cd dist
-find pkg/ -printf "%P\n" -type f -o -type l -o -type d | tar -czf tuxedo-backlight-control.pkg.tar.gz --no-recursion -C pkg/ -T -
-
-# Cleanup
-rm -rf pkg/
-cd ../build/ARCH
-rm -rf pkg/
-rm -rf src/
-unlink *.tar.gz
+cp -r build/DEBIAN src
+dpkg-deb -b src "dist/$pkg-$ver-1.any.deb"
+rm -rf src/DEBIAN
