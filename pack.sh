@@ -27,6 +27,7 @@ fpm -s dir\
   --url "$url"\
   --description "Tuxedo Backlight Ctrl
   $desc"\
+  --deb-priority optional\
   --category "$category"\
   --license MIT\
   --depends python3\

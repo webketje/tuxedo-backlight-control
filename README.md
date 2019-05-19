@@ -2,7 +2,7 @@
 Minimal Linux distro CLI &amp; UI for TUXEDO / Clevo computers Keyboard Backlight
 
 This utility automates toggling keyboard backlight state for Tuxedo/ Clevo computers on Linux.
-It can toggle the keyboard backlight off, set any modes defined [here](https://github.com/tuxedocomputers/tuxedo-keyboard#modes) and set a single or multiple colors in `custom` mode.
+It can toggle the keyboard backlight off, set any modes defined [here](https://github.com/tuxedocomputers/tuxedo-keyboard#modes) and set a single or multiple colors in Color (`custom`)  mode.
 Available colors can be found [here](https://www.cssportal.com/html-colors/orig-16-colors.php).
 
 ## Usage
@@ -43,10 +43,14 @@ Usage:
 
 ## Requirements
 
-Required packages: python3, python3-tk & policykit-1.
+Required packages: 
+
+* On **Debian/ Ubuntu/ Linux Mint** : python3, python3-tk & policykit-1.
+* On **Arch Linux/ Manjaro** : python, tk, polkit
+
 On Debian you can verify if you have these by doing `apt show <package-name>`.  
 
-Required modules: [tuxedo-keyboard](https://github.com/tuxedocomputers/tuxedo-keyboard)
+Required modules: [tuxedo-keyboard](https://github.com/tuxedocomputers/tuxedo-keyboard)  
 Download it from the repository or git clone as below:
 
 ```
@@ -56,20 +60,73 @@ cd tuxedo-keyboard
 
 Follow the instructions at [tuxedo-keyboard under the section "The DKMS route"](https://github.com/tuxedocomputers/tuxedo-keyboard#the-dkms-route)
 
+----
+
 ## Install
 
-Download and double-click the `.deb` package from the [releases](https://github.com/webketje/tuxedo-backlight-control/releases).
-Or do it manually:
+*Note: You might have to execute some of the commands below with `sudo`*
+
+### Debian
+
+Download and double-click the `.deb` package from the [releases](https://github.com/webketje/tuxedo-backlight-control/releases/latest), or run
+```
+sudo dpkg -i tuxedo-backlight-control_0.3-1_amd64.deb
+```
+from the folder where you downloaded it.
+
+### Arch Linux
+
+Download the `.pkg.tar.xz` package from the [releases](https://github.com/webketje/tuxedo-backlight-control/releases/latest), and run
 
 ```
-git clone https://github.com/webketje/tuxedo-backlight-control.github
+pacman -U tuxedo-backlight-control-0.3-1.pkg.tar.xz
+```
+from the folder where you downloaded it.
+
+_Note: Although it is not recommended, you **can** install dpkg on Arch Linux, and install the .deb package there as you would on Debian OS'es._
+
+### Manual
+
+```
+git clone https://github.com/webketje/tuxedo-backlight-control.git
 cd tuxedo-backlight-control
 ./pack.sh
-sudo dpkg -i tuxedo-backlight-control.deb
 ```
+
+In the `dist` folder you will find distribution packages built for the supported distro's. If none of these packages fits your distribution you can manually paste the contents of the `src/` folder in your system root like so:
+
+```
+cd src
+cp -r usr /usr
+ln -s -f -T /usr/share/tuxedo-backlight-control/backlight.py /usr/local/bin/backlight
+```
+
+
 
 ## Uninstall
 
+*Note: You might have to execute some of the commands below with `sudo`*
+
+### Debian
+
 ```
-sudo dpkg -r tuxedo-backlight-control
+dpkg -r tuxedo-backlight-control
 ```
+
+### Arch Linux
+
+```
+pacman -Rs tuxedo-backlight-control
+```
+
+### Manual
+
+```
+rm -rf /usr/share/tuxedo-backlight-control
+unlink /usr/local/bin/backlight
+unlink /usr/share/doc/tuxedo-backlight-control/copyright
+unlink /usr/share/applications/tuxedo-backlight-control.desktop
+unlink /usr/share/polkit-1/actions/webketje.tuxedo-backlight-control.policy
+```
+
+
