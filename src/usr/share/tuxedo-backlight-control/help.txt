@@ -1,5 +1,5 @@
 
-Tuxedo Backlight Control <tuxedo-backlight-control> - v0.3 - 2019-05-12
+Tuxedo Backlight Control <tuxedo-backlight-control> - v0.4 - 2019-05-19
 By Kevin Van Lierde <kevin.van.lierde@gmail.com>
 
 Usage:

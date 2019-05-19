@@ -70,7 +70,7 @@ Follow the instructions at [tuxedo-keyboard under the section "The DKMS route"](
 
 Download and double-click the `.deb` package from the [releases](https://github.com/webketje/tuxedo-backlight-control/releases/latest), or run
 ```
-sudo dpkg -i tuxedo-backlight-control_0.3-1_amd64.deb
+sudo dpkg -i tuxedo-backlight-control_0.4-1_amd64.deb
 ```
 from the folder where you downloaded it.
 
@@ -79,7 +79,7 @@ from the folder where you downloaded it.
 Download the `.pkg.tar.xz` package from the [releases](https://github.com/webketje/tuxedo-backlight-control/releases/latest), and run
 
 ```
-pacman -U tuxedo-backlight-control-0.3-1.pkg.tar.xz
+pacman -U tuxedo-backlight-control-0.4-1.pkg.tar.xz
 ```
 from the folder where you downloaded it.
 
