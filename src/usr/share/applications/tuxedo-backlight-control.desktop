@@ -6,4 +6,5 @@ Path=/usr/share/tuxedo-backlight-control
 Icon=/usr/share/tuxedo-backlight-control/icon.png
 Terminal=False
 Type=Application
-Categories=Settings;HardwareSettings;
+Keywords=backlight;keyboard;tuxedo;
+Categories=System;Settings;
