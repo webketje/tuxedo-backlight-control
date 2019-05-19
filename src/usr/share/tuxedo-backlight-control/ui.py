@@ -41,8 +41,8 @@ class App(ttk.Frame):
         self.bg_frame.grid_rowconfigure(2, weight=0, pad=10)
         self.bg_frame.grid_rowconfigure(6, weight=0, pad=0)
 
-        for index in enumerate(self.regions):
-            self.bg_frame.grid_rowconfigure(index + 2, weight=0, pad=10)
+        for region in enumerate(self.regions):
+            self.bg_frame.grid_rowconfigure(region[0] + 2, weight=0, pad=10)
 
         self.labels = dict(
             mode=ttk.Label(self.bg_frame, text='Backlight mode: '),
