@@ -4,9 +4,9 @@ Version: 0.3
 Maintainer: Kevin Van Lierde <kevin.van.lierde@gmail.com>
 Architecture: all
 Description: Tuxedo Backlight Ctrl
- Utility built on top of TUXEDO Kernel module for keyboard backlighting
- (https://github.com/tuxedocomputers/tuxedo-keyboard) for Debian-based systems.
- It provides a bash CLI and a minimal Python UI.
+ GUI utility built on top of TUXEDO Kernel module for keyboard backlighting
+ (https://github.com/tuxedocomputers/tuxedo-keyboard).
+ Provides a bash CLI (backlight) and a minimal Python UI.
 Section: contrib/utils
 Priority: optional
 Depends: python3, python3-tk, policykit-1

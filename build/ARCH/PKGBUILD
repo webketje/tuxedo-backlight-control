@@ -6,6 +6,8 @@ pkgver=0.3
 arch=('any')
 license=('MIT')
 url=https://github.com/webketje/tuxedo-backlight-control
-pkgdesc='GUI Utility built on top of TUXEDO Computers Kernel module for keyboard backlighting.'
+pkgdesc='GUI utility built on top of TUXEDO Kernel module for keyboard backlighting
+ (https://github.com/tuxedocomputers/tuxedo-keyboard).
+ Provides a bash CLI (backlight) and a minimal Python UI.'
 depends=('python' 'tk' 'polkit')
 install='tuxedo-backlight-control.install'

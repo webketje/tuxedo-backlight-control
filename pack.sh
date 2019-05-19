@@ -4,10 +4,6 @@ else
   rm -rf dist/*
 fi
 
-find src -type d -exec chmod 755 {} \;
-find src -type f -exec chmod 644 {} \;
-find build/DEBIAN -type f -exec chmod 755 {} \;
-
 pkg='tuxedo-backlight-control'
 ver='0.3'
 maintainer='Kevin Van Lierde <kevin.van.lierde@gmail.com>'
@@ -15,11 +11,32 @@ url='https://github.com/webketje/tuxedo-backlight-control'
 prerm='../build/DEBIAN/prerm'
 postinst='../build/DEBIAN/postinst'
 category='contrib/utils'
-desc='Utility built on top of TUXEDO Kernel module for keyboard backlighting
- (https://github.com/tuxedocomputers/tuxedo-keyboard) for Debian-based systems.
- It provides a bash CLI and a minimal Python UI.'
+desc='GUI utility built on top of TUXEDO Kernel module for keyboard backlighting
+ (https://github.com/tuxedocomputers/tuxedo-keyboard).
+ Provides a bash CLI (backlight) and a minimal Python UI.'
 
 cd src
+
+fpm -s dir\
+  -t deb\
+  -f\
+  -n "$pkg"\
+  -v "$ver"\
+  --iteration 1\
+  --maintainer "$maintainer"\
+  --url "$url"\
+  --description "Tuxedo Backlight Ctrl
+  $desc"\
+  --category "$category"\
+  --license MIT\
+  --depends python3\
+  --depends python3-tk\
+  --depends policykit-1\
+  --after-install "$postinst"\
+  --before-remove "$prerm"\
+  usr
+
+mv "${pkg}_$ver-1_amd64.deb" "../dist/${pkg}_$ver-1_amd64.deb"
 
 fpm -s dir\
   -t pacman\
@@ -62,10 +79,3 @@ fpm -s dir\
   usr
 
 mv "$pkg-$ver-1.any.rpm" "../dist/$pkg-$ver-1.any.rpm"
-
-# Debian & derivatives
-cd ..
-
-cp -r build/DEBIAN src
-dpkg-deb -b src "dist/$pkg-$ver-1.any.deb"
-rm -rf src/DEBIAN
