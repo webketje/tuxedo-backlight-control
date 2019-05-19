@@ -2,10 +2,12 @@
 
 import tkinter as tk
 from tkinter import ttk
-import os
 from backlight import backlight
 
+
 class App(ttk.Frame):
+
+    ICONPATH = '/usr/share/tuxedo-backlight-control/icon.png'
 
     bgcolor = '#333333'  # background
     fgcolor = '#AAAAAA'  # foreground
@@ -17,61 +19,118 @@ class App(ttk.Frame):
         self.init_ttk_style()
         self.parent = parent
         self.parent.title('Tuxedo Backlight Ctrl')
-        self.parent.iconphoto(parent._w, tk.PhotoImage(file='/usr/share/tuxedo-backlight-control/icon.png'))
+        self.parent.iconphoto(parent._w, tk.PhotoImage(file=self.ICONPATH))
         self.parent.resizable(width=False, height=False)
         self.parent.grid(widthInc=8, heightInc=8, baseHeight=5, baseWidth=40)
         self.parent.grid_columnconfigure(0, weight=1, pad=2)
         self.parent.grid_rowconfigure(0, weight=1, pad=2)
 
-        self.regions = ('color_left', 'color_center', 'color_right', 'color_extra')
-
-        self.bgFrame = ttk.Frame(self.parent)
-        self.bgFrame.grid(sticky=tk.NSEW, column=0, row=0)
-        self.bgFrame.grid_columnconfigure(0, weight=1, minsize=150, pad=10)
-        self.bgFrame.grid_columnconfigure(1, weight=2, minsize=150, pad=10)
-        self.bgFrame.grid_rowconfigure(0, weight=0, pad=10)
-        self.bgFrame.grid_rowconfigure(1, weight=0, pad=10)
-        self.bgFrame.grid_rowconfigure(2, weight=0, pad=10)
-        self.bgFrame.grid_rowconfigure(6, weight=0, pad=0)
-
-        for index, region in enumerate(self.regions):
-            self.bgFrame.grid_rowconfigure(index + 2, weight=0, pad=10)
-
-        self.labels = dict(
-            mode = ttk.Label(self.bgFrame, text='Backlight mode: '),
-            color = ttk.Label(self.bgFrame, text='Backlight color: '),
-            color_mode = ttk.Label(self.bgFrame, text='Color mode: '),
-            color_left = ttk.Label(self.bgFrame, text='Color left: '),
-            color_center = ttk.Label(self.bgFrame, text='Color center: '),
-            color_right = ttk.Label(self.bgFrame, text='Color right: '),
-            color_extra = ttk.Label(self.bgFrame, text='Color extra: ')
+        self.regions = (
+            'color_left',
+            'color_center',
+            'color_right',
+            'color_extra'
         )
 
+        self.bg_frame = ttk.Frame(self.parent)
+        self.bg_frame.grid(sticky=tk.NSEW, column=0, row=0)
+        self.bg_frame.grid_columnconfigure(0, weight=1, minsize=150, pad=10)
+        self.bg_frame.grid_columnconfigure(1, weight=2, minsize=150, pad=10)
+        self.bg_frame.grid_rowconfigure(0, weight=0, pad=10)
+        self.bg_frame.grid_rowconfigure(1, weight=0, pad=10)
+        self.bg_frame.grid_rowconfigure(2, weight=0, pad=10)
+        self.bg_frame.grid_rowconfigure(6, weight=0, pad=0)
+
+        for index in enumerate(self.regions):
+            self.bg_frame.grid_rowconfigure(index + 2, weight=0, pad=10)
+
+        self.labels = dict(
+            mode=ttk.Label(self.bg_frame, text='Backlight mode: '),
+            color=ttk.Label(self.bg_frame, text='Backlight color: '),
+            color_mode=ttk.Label(self.bg_frame, text='Color mode: '),
+            color_left=ttk.Label(self.bg_frame, text='Color left: '),
+            color_center=ttk.Label(self.bg_frame, text='Color center: '),
+            color_right=ttk.Label(self.bg_frame, text='Color right: '),
+            color_extra=ttk.Label(self.bg_frame, text='Color extra: ')
+        )
+
+        if backlight.state == 1:
+            initial_mode = backlight.mode.capitalize()
+        else:
+            initial_mode = 'Select...'
+
         self.values = dict(
-            mode = tk.StringVar(self, value = backlight.mode.capitalize() if backlight.state else 'Select...'),
-            color_mode = tk.StringVar(self, value = self.color_mode),
-            color_left = tk.StringVar(self, value = backlight.color_left.capitalize()),
-            color_center = tk.StringVar(self, value = backlight.color_center.capitalize()),
-            color_right = tk.StringVar(self, value = backlight.color_right.capitalize()),
-            color_extra = tk.StringVar(self, value = backlight.color_extra.capitalize())
+            mode=tk.StringVar(self, value=initial_mode),
+            color_mode=tk.StringVar(self, value=self.color_mode),
+            color_left=tk.StringVar(self, value=backlight.color_left.capitalize()),
+            color_center=tk.StringVar(self, value=backlight.color_center.capitalize()),
+            color_right=tk.StringVar(self, value=backlight.color_right.capitalize()),
+            color_extra=tk.StringVar(self, value=backlight.color_extra.capitalize())
         )
 
         def set_single_color(color):
-            self.color = color
+            if not color == 'Select...':
+                self.color = color
 
         self.widgets = dict(
-            mode = ttk.OptionMenu(self.bgFrame, self.values['mode'], None, *backlight.display_modes(), command = self.on_mode_switch),
-            color = ttk.OptionMenu(self.bgFrame, self.values['color_left'], self.color_left, *backlight.display_colors(), command = set_single_color),
-            color_mode = dict(frame = ttk.Frame(self.bgFrame)),
-            color_left = ttk.OptionMenu(self.bgFrame, self.values['color_left'], self.color_left, *backlight.display_colors(), command = self.color_setter('left')),
-            color_center = ttk.OptionMenu(self.bgFrame, self.values['color_center'], backlight.color_center.capitalize(), *backlight.display_colors(), command = self.color_setter('center')),
-            color_right = ttk.OptionMenu(self.bgFrame, self.values['color_right'], backlight.color_right.capitalize(), *backlight.display_colors(), command = self.color_setter('right')),
-            color_extra = ttk.OptionMenu(self.bgFrame, self.values['color_extra'], backlight.color_extra.capitalize(), *backlight.display_colors(), command = self.color_setter('extra'))
+            mode=ttk.OptionMenu(
+                self.bg_frame,
+                self.values['mode'],
+                None,
+                *backlight.display_modes(),
+                command=self.on_mode_switch
+            ),
+            color=ttk.OptionMenu(
+                self.bg_frame,
+                self.values['color_left'],
+                self.color_left,
+                *backlight.display_colors(),
+                command=set_single_color
+            ),
+            color_mode=dict(frame=ttk.Frame(self.bg_frame)),
+            color_left=ttk.OptionMenu(
+                self.bg_frame,
+                self.values['color_left'],
+                self.color_left,
+                *backlight.display_colors(),
+                command=self.color_setter('left')
+            ),
+            color_center=ttk.OptionMenu(
+                self.bg_frame,
+                self.values['color_center'],
+                backlight.color_center.capitalize(),
+                *backlight.display_colors(),
+                command=self.color_setter('center')
+            ),
+            color_right=ttk.OptionMenu(
+                self.bg_frame,
+                self.values['color_right'],
+                backlight.color_right.capitalize(),
+                *backlight.display_colors(),
+                command=self.color_setter('right')
+            ),
+            color_extra=ttk.OptionMenu(
+                self.bg_frame,
+                self.values['color_extra'],
+                backlight.color_extra.capitalize(),
+                *backlight.display_colors(),
+                command=self.color_setter('extra')
+            )
         )
 
         self.widgets['color_mode']['options'] = (
-            ttk.Radiobutton(self.widgets['color_mode']['frame'], variable=self.values['color_mode'], text='Single', value='single', command = lambda : self.on_color_mode_switch(self.values['color_mode'].get())),
-            ttk.Radiobutton(self.widgets['color_mode']['frame'], variable=self.values['color_mode'], text='Multiple', value='multiple', command = lambda : self.on_color_mode_switch(self.values['color_mode'].get()))
+            ttk.Radiobutton(
+                self.widgets['color_mode']['frame'],
+                variable=self.values['color_mode'],
+                text='Single', value='single',
+                command=lambda: self.on_color_mode_switch(self.values['color_mode'].get())
+            ),
+            ttk.Radiobutton(
+                self.widgets['color_mode']['frame'],
+                variable=self.values['color_mode'],
+                text='Multiple', value='multiple',
+                command=lambda: self.on_color_mode_switch(self.values['color_mode'].get())
+            )
         )
 
         menuconfig = dict(
@@ -94,33 +153,66 @@ class App(ttk.Frame):
         self.labels['mode'].grid(column=0, row=0, sticky='EW')
         self.widgets['mode'].grid(column=1, row=0, sticky='EW', padx=10)
         self.init_footer()
-        
+
         if backlight.state == 1:
             self.init_mode(backlight.mode)
-        self.backlight_off()
+        else:
+            self.backlight_off()
 
     def init_ttk_style(self):
-        ttkStyle = ttk.Style()
-        ttkStyle.theme_use('clam')
-        ttkStyle.configure('.', background=App.bgcolor, activebackground=App.shcolor, indicatoron=0,
-                           foreground=App.fgcolor, bordercolor=App.shcolor, highlightthickness=0, highlightcolor=App.hlcolor, relief=tk.FLAT)
-        ttkStyle.configure('TButton', background=App.bgcolor, bordercolor=App.shcolor, relief=tk.SOLID, highlightcolor=App.hlcolor)
-        ttkStyle.configure('TMenubutton', borderwidth=1, bordercolor=App.shcolor, relief=tk.SOLID)
-        ttkStyle.configure('TRadiobutton', background=App.bgcolor)
-        ttkStyle.configure('TMenu', background=App.bgcolor)
-        ttkStyle.configure('TLabel', padding=5, foreground=App.fgcolor)
-        ttkStyle.map('.',
-            background=[('active', App.shcolor),
-                        ('focus', App.shcolor)],
-            foreground=[('active', App.hlcolor),
-                        ('focus', App.hlcolor),
-                        ('disabled', App.shcolor)],
-            bordercolor=[('active', App.shcolor)]
+        ttk_style = ttk.Style()
+        ttk_style.theme_use('clam')
+        ttk_style.configure(
+            '.',
+            background=App.bgcolor,
+            activebackground=App.shcolor,
+            indicatoron=0,
+            foreground=App.fgcolor,
+            bordercolor=App.shcolor,
+            highlightthickness=0,
+            highlightcolor=App.hlcolor,
+            relief=tk.FLAT
         )
-        ttkStyle.map('TButton', background=[('active', App.shcolor)], foreground=[('disabled', App.shcolor)], bordercolor=[('disabled', '#4444444')])
+        ttk_style.configure(
+            'TButton',
+            background=App.bgcolor,
+            bordercolor=App.shcolor,
+            relief=tk.SOLID,
+            highlightcolor=App.hlcolor
+        )
+        ttk_style.configure(
+            'TMenubutton',
+            borderwidth=1,
+            bordercolor=App.shcolor,
+            relief=tk.SOLID
+        )
+        ttk_style.configure('TRadiobutton', background=App.bgcolor)
+        ttk_style.configure('TMenu', background=App.bgcolor)
+        ttk_style.configure('TLabel', padding=5, foreground=App.fgcolor)
+        ttk_style.map(
+            '.',
+            background=[
+                ('active', App.shcolor),
+                ('focus', App.shcolor)
+            ],
+            foreground=[
+                ('active', App.hlcolor),
+                ('focus', App.hlcolor),
+                ('disabled', App.shcolor)
+            ],
+            bordercolor=[
+                ('active', App.shcolor)
+            ]
+        )
+        ttk_style.map(
+            'TButton',
+            background=[('active', App.shcolor)],
+            foreground=[('disabled', App.shcolor)],
+            bordercolor=[('disabled', '#4444444')]
+        )
 
     def color_setter(self, region):
-        return lambda value: setattr(backlight, 'color_' + region, value.lower())
+        return lambda val: setattr(backlight, 'color_' + region, val.lower())
 
     def init_colors(self):
         fmt = self.color_mode
@@ -134,7 +226,7 @@ class App(ttk.Frame):
         for region in self.regions:
             self.labels[region].grid_remove()
             self.widgets[region].grid_remove()
-    
+
     def hide_single_color(self):
         self.labels['color'].grid_remove()
         self.widgets['color'].grid_remove()
@@ -149,15 +241,24 @@ class App(ttk.Frame):
         self.values['color_mode'].set(self.color_mode)
         self.labels['color_mode'].grid(row=1, column=0, sticky=tk.EW)
         self.widgets['color_mode']['frame'].grid(row=1, column=1, sticky=tk.EW)
-        self.widgets['color_mode']['options'][0].grid(row=1, column=0, sticky=tk.EW)
-        self.widgets['color_mode']['options'][1].grid(row=1, column=1, sticky=tk.EW)
+        self.widgets['color_mode']['options'][0].grid(
+            row=1,
+            column=0,
+            sticky=tk.EW
+        )
+        self.widgets['color_mode']['options'][1].grid(
+            row=1,
+            column=1,
+            sticky=tk.EW
+        )
 
     def on_color_mode_switch(self, value):
         if value == 'multiple':
             self.hide_single_color()
             self.init_multiple_colors()
         else:
-            self.color = self.color_left
+            if self.values['color_left'].get() != 'Select...':
+                self.color = self.color_left
             self.hide_multiple_colors()
             self.init_single_color()
 
@@ -181,7 +282,7 @@ class App(ttk.Frame):
 
     def on_mode_switch(self, value):
         backlight.state = 1
-        self.offButton.configure(state='enabled')
+        self.off_button.configure(state='enabled')
         self.init_mode(value.lower())
         self.mode = value
 
@@ -215,25 +316,31 @@ class App(ttk.Frame):
     @color_left.setter
     def color_left(self, value):
         self.values['color_left'].set(value)
-        backlight.color_left = value.lower()
-
+        if not value == 'Select...':
+            backlight.color_left = value.lower()
 
     def backlight_off(self):
-        self.offButton.configure(state='disabled')
+        self.off_button.configure(state='disabled')
         backlight.state = 0
-        self.mode = 'Select...'
+        self.values['mode'].set('Select...')
         self.hide_colors()
-
 
     def init_footer(self):
         state = 'disabled' if not backlight.state else 'enabled'
-        self.offButton = ttk.Button(self.bgFrame, text="Backlight off", command=self.backlight_off, state=state)
-        self.offButton.grid(sticky=tk.E, column=1, row=6, padx=10, pady=10)
+        self.off_button = ttk.Button(
+            self.bg_frame,
+            text="Backlight off",
+            command=self.backlight_off,
+            state=state
+        )
+        self.off_button.grid(sticky=tk.E, column=1, row=6, padx=10, pady=10)
+
 
 def init():
     root = tk.Tk()
     App(root)
     root.mainloop()
+
 
 if __name__ == '__main__':
     init()
