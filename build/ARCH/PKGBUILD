@@ -2,7 +2,7 @@
 
 pkgname=tuxedo-backlight-control
 pkgrel=1
-pkgver=0.4
+pkgver=0.5
 arch=('any')
 license=('MIT')
 url=https://github.com/webketje/tuxedo-backlight-control
