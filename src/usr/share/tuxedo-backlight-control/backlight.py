@@ -5,8 +5,16 @@ from sys import argv
 from io import StringIO
 from colors import colors
 import subprocess
+import re
 
 sd = os.path.dirname(os.path.realpath(__file__))
+
+if os.path.isfile('/etc/tuxedo-backlight-control/colors.conf'):
+    f = open('/etc/tuxedo-backlight-control/colors.conf')
+    for line in f:
+        match = re.search('([\da-z_]+)=([\da-f]{6})', line)
+        if match and len(match.groups()) == 2:
+            colors[match.groups()[0]] = match.groups()[1]
 
 class BacklightControl():
     DEVICE_PATH = '/sys/devices/platform/tuxedo_keyboard/'
@@ -145,12 +153,17 @@ class BacklightControl():
 
 backlight = BacklightControl()
 
-if __name__ == '__main__' and len(argv) > 1:
+if __name__ == '__main__':
+    if len(argv) == 1:
+        exit('Tuxedo Backlight Ctrl: No command specified. Try "backlight --help" to list available commands')
+
     cmd = argv[1]
     if cmd == '--help' or cmd == '-h':
-        print(sd)
         with open(sd + '/help.txt', 'r') as fin:
-            print(fin.read())
+            exit(fin.read())
+            
+    if not os.path.isdir(BacklightControl.DEVICE_PATH):
+        exit('Tuxedo Backlight Ctrl: The tuxedo_keyboard module is not installed at ' + BacklightControl.DEVICE_PATH)
     elif cmd == 'ui':
         subprocess.call(['/usr/share/tuxedo-backlight-control/ui.py'])
     elif cmd == 'off':

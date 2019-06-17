@@ -33,13 +33,25 @@ Usage:
     color  <color>{1,4}   Set the keyboard backlight to a single color, one of:
                           white, silver, gray, yellow, orange, red, maroon, crimson,
                           fuchsia, purple, rose, cyan, turquoise, teal, blue, navy,
-                          olive, lime, green
+                          olive, lime, green,
+                          OR any valid colors defined in /etc/tuxedo-backlight-control/colors.conf
 
-                          Alternatively, set the keyboard to x (1-4) distinct colors,
+                          Alternatively, set the keyboard to 4 distinct colors,
                           in the order: left, center, right, extra. Only regions supported
                           by your keyboard will have effect.
+```
+
+### Custom Colors
+
+As of 0.5 you can add your own custom colors, by creating a `colors.conf` file in a directory `/etc/tuxedo-backlight-control`. The file should have a format like:
 
 ```
+my_color1=123456
+my_color2=654321
+```
+
+The colors added here will be usable both in the CLI, and appear in the UI. They should be valid HEX colors,
+the keys can only contain alphanumeric characters. 
 
 ## Requirements
 
