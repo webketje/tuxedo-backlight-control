@@ -7,5 +7,5 @@ arch=('x86_64')
 license=('MIT')
 url=https://github.com/webketje/tuxedo-backlight-control
 pkgdesc='GUI utility built on top of TUXEDO Keyboard. Provides a bash CLI (backlight) and a minimal Python UI.'
-depends=('python' 'tk' 'polkit' 'tuxedo-keyboard')
+depends=('python' 'tk' 'polkit')
 install='tuxedo-backlight-control.install'
