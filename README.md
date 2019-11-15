@@ -1,4 +1,4 @@
-# Tuxedo Backlight Control
+# TUXEDO Backlight Control
 Minimal Linux distro CLI &amp; UI for TUXEDO / Clevo computers Keyboard Backlight
 
 This utility automates toggling keyboard backlight state for TUXEDO / Clevo computers on Linux.
