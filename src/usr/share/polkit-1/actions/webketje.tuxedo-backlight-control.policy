@@ -4,8 +4,8 @@
  "http://www.freedesktop.org/standards/PolicyKit/1/policyconfig.dtd">
 <policyconfig>
   <action id="webketje.tuxedo-backlight-control.backlight">
-    <description>Runs the python3 backlight script for Tuxedo Backlight Control</description>
-    <message>Authentication is required to run Tuxedo Backlight Ctrl</message>
+    <description>Runs the python3 backlight script for TUXEDO Backlight Control</description>
+    <message>Authentication is required to run TUXEDO Backlight Ctrl</message>
     <icon_name>input-keyboard-symbolic</icon_name>
     <vendor>webketje</vendor>
     <vendor_url>https://github.com/webketje/tuxedo-backlight-control</vendor_url>
@@ -20,8 +20,8 @@
   </action>
 
   <action id="webketje.tuxedo-backlight-control.ui">
-    <description>Runs the python3 UI for Tuxedo Backlight Control</description>
-    <message>Authentication is required to run Tuxedo Backlight Ctrl</message>
+    <description>Runs the python3 UI for TUXEDO Backlight Control</description>
+    <message>Authentication is required to run TUXEDO Backlight Ctrl</message>
     <icon_name>input-keyboard-symbolic</icon_name>
     <vendor>webketje</vendor>
     <vendor_url>https://github.com/webketje/tuxedo-backlight-control</vendor_url>
