@@ -2,7 +2,7 @@
 
 import tkinter as tk
 from tkinter import ttk
-from backlight import backlight
+from backlight_control import backlight
 
 
 class App(ttk.Frame):
