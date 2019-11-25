@@ -19,6 +19,7 @@ if os.path.isfile('/etc/tuxedo-backlight-control/colors.conf'):
 class BacklightControl():
     DEVICE_PATH = '/sys/devices/platform/tuxedo_keyboard/'
     MODULE_PATH = '/sys/module/tuxedo_keyboard'
+    VERSION = '0.5'
 
     modes = (
         'color',
@@ -161,10 +162,14 @@ if __name__ == '__main__':
     if cmd == '--help' or cmd == '-h':
         with open(sd + '/help.txt', 'r') as fin:
             exit(fin.read())
+
+    if cmd == '--version' or cmd == '-v':
+        exit(BacklightControl.VERSION)
             
     if not os.path.isdir(BacklightControl.DEVICE_PATH):
         exit('Tuxedo Backlight Ctrl: The tuxedo_keyboard module is not installed at ' + BacklightControl.DEVICE_PATH)
-    elif cmd == 'ui':
+
+    if cmd == 'ui':
         subprocess.call(['/usr/share/tuxedo-backlight-control/ui.py'])
     elif cmd == 'off':
         backlight.state = 0
