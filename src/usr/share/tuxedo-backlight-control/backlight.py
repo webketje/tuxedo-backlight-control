@@ -19,7 +19,7 @@ if os.path.isfile('/etc/tuxedo-backlight-control/colors.conf'):
 class BacklightControl():
     DEVICE_PATH = '/sys/devices/platform/tuxedo_keyboard/'
     MODULE_PATH = '/sys/module/tuxedo_keyboard'
-    VERSION = '0.5'
+    VERSION = '0.6'
 
     modes = (
         'color',

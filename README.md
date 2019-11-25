@@ -53,6 +53,8 @@ my_color2=654321
 The colors added here will be usable both in the CLI, and appear in the color dropdown in the UI.
 The values should be valid HEX colors, the keys can only contain alphanumeric characters. 
 
+Development of this software is done on Clevo N150-ZU / N151-ZU. Only single color mode is known to work for these the models.
+
 ## Requirements
 
 Required packages: 

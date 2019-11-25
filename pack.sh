@@ -5,7 +5,7 @@ else
 fi
 
 pkg='tuxedo-backlight-control'
-ver='0.5'
+ver='0.6'
 maintainer='Kevin Van Lierde <kevin.van.lierde@gmail.com>'
 url='https://github.com/webketje/tuxedo-backlight-control'
 prerm='../build/DEBIAN/prerm'
@@ -26,6 +26,7 @@ fpm -s dir\
   -v "$ver"\
   --iteration 1\
   --maintainer "$maintainer"\
+  --vendor "webketje"\
   --url "$url"\
   --description "Tuxedo Backlight Ctrl
   $desc"\
@@ -51,6 +52,7 @@ fpm -s dir\
   -a any\
   --iteration 1\
   --maintainer "$maintainer"\
+  --vendor "webketje"\
   --url "$url"\
   --description "$desc"\
   --category "$category"\
@@ -74,6 +76,7 @@ fpm -s dir\
   -a any\
   --iteration 1\
   --maintainer "$maintainer"\
+  --vendor "webketje"\
   --url "$url"\
   --description "$desc"\
   --category "$category"\
