@@ -1,7 +1,7 @@
-# Tuxedo Backlight Control
+# TUXEDO Backlight Control
 Minimal Linux distro CLI &amp; UI for TUXEDO / Clevo computers Keyboard Backlight
 
-This utility automates toggling keyboard backlight state for Tuxedo/ Clevo computers on Linux.
+This utility automates toggling keyboard backlight state for TUXEDO / Clevo computers on Linux.
 It can toggle the keyboard backlight off, set any modes defined [here](https://github.com/tuxedocomputers/tuxedo-keyboard#modes) and set a single or multiple colors in Color (`custom`)  mode.
 Available colors can be found [here](https://www.cssportal.com/html-colors/orig-16-colors.php).
 
@@ -9,7 +9,7 @@ Available colors can be found [here](https://www.cssportal.com/html-colors/orig-
 
 ### UI
 
-Search for *Tuxedo Backlight Control* from the <kbd>Super</kbd> (Start) menu.
+Search for *TUXEDO Backlight Control* from the <kbd>Super</kbd> (Start) menu.
 
 ![](/assets/screenshot.png)
 
@@ -23,7 +23,7 @@ backlight <command> [<option>]
 Usage:
     -h, --help            Display this message
 
-    ui                    Start the Tuxedo Backlight Control UI
+    ui                    Start the TUXEDO Backlight Control UI
 
     off                   Turn off keyboard backlight
 
@@ -58,7 +58,7 @@ The values should be valid HEX colors, the keys can only contain alphanumeric ch
 Required packages: 
 
 * On **Debian/ Ubuntu/ Linux Mint** : python3, python3-tk & policykit-1.
-* On **Arch Linux/ Manjaro** : python, tk, polkit
+* On **Arch Linux / Manjaro** : python, tk, polkit
 
 On Debian you can verify if you have these by doing `apt show <package-name>`.  
 
@@ -71,6 +71,16 @@ cd tuxedo-keyboard
 ```
 
 Follow the instructions at [tuxedo-keyboard under the section "The DKMS route"](https://github.com/tuxedocomputers/tuxedo-keyboard#the-dkms-route)
+
+## Alternative options
+
+### On Arch Linux / Manjaro:
+
+You can install the ["tuxedo-keyboard"](https://aur.archlinux.org/packages/tuxedo-keyboard/ "TUXEDO Keyboard AUR Package") Package from the AUR
+
+### On Ubuntu (Linux Mint and Debian are not tested)
+
+You can download and install the TUXEDO Keyboard .deb Package from http://deb.tuxedocomputers.com/ubuntu/pool/main/t/tuxedo-keyboard-dkms/
 
 ----
 

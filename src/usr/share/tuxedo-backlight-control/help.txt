@@ -1,11 +1,11 @@
 
-Tuxedo Backlight Control <tuxedo-backlight-control> - v0.5 - 2019-06-18
+TUXEDO Backlight Control <tuxedo-backlight-control> - v0.5 - 2019-06-18
 By Kevin Van Lierde <kevin.van.lierde@gmail.com>
 
 Usage:
     -h, --help            Display this message
 
-    ui                    Start the Tuxedo Backlight Control UI
+    ui                    Start the TUXEDO Backlight Control UI
 
     off                   Turn off keyboard backlight
 
