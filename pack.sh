@@ -17,6 +17,8 @@ desc='GUI utility built on top of TUXEDO Kernel module for keyboard backlighting
 
 cd src
 
+# DEBIAN
+
 fpm -s dir\
   -t deb\
   -f\
@@ -39,6 +41,8 @@ fpm -s dir\
 
 mv "${pkg}_$ver-1_amd64.deb" "../dist/${pkg}_$ver-1_amd64.deb"
 
+# ARCH
+
 fpm -s dir\
   -t pacman\
   -f\
@@ -59,6 +63,8 @@ fpm -s dir\
   usr
 
 mv "$pkg-$ver-1-any.pkg.tar.xz" "../dist/$pkg-$ver-1-any.pkg.tar.xz"
+
+# RED HAT
 
 fpm -s dir\
   -t rpm\
