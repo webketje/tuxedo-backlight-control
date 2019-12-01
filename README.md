@@ -95,7 +95,6 @@ You can download and install the TUXEDO Keyboard .deb Package from http://deb.tu
 Download and double-click the `.deb` package from the [releases](https://github.com/webketje/tuxedo-backlight-control/releases/latest), or run
 ```
 sudo dpkg -i tuxedo-backlight-control_0.6-1_amd64.deb
-
 ```
 from the folder where you downloaded it.
 
