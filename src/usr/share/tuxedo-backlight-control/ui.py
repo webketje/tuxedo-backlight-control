@@ -44,104 +44,107 @@ class App(ttk.Frame):
         for region in enumerate(self.regions):
             self.bg_frame.grid_rowconfigure(region[0] + 2, weight=0, pad=10)
 
-        self.labels = dict(
-            mode=ttk.Label(self.bg_frame, text='Backlight mode: '),
-            color=ttk.Label(self.bg_frame, text='Backlight color: '),
-            color_mode=ttk.Label(self.bg_frame, text='Color mode: '),
-            color_left=ttk.Label(self.bg_frame, text='Color left: '),
-            color_center=ttk.Label(self.bg_frame, text='Color center: '),
-            color_right=ttk.Label(self.bg_frame, text='Color right: '),
-            color_extra=ttk.Label(self.bg_frame, text='Color extra: ')
-        )
+        self.labels = {
+            'mode': ttk.Label(self.bg_frame, text='Backlight mode: '),
+            'color': ttk.Label(self.bg_frame, text='Backlight color: '),
+            'color_mode': ttk.Label(self.bg_frame, text='Color mode: '),
+            'color_left': ttk.Label(self.bg_frame, text='Color left: '),
+            'color_center': ttk.Label(self.bg_frame, text='Color center: '),
+            'color_right': ttk.Label(self.bg_frame, text='Color right: '),
+            'color_extra': ttk.Label(self.bg_frame, text='Color extra: ')
+        }
 
         if backlight.state == 1:
             initial_mode = backlight.mode.capitalize()
         else:
             initial_mode = 'Select...'
 
-        self.values = dict(
-            mode=tk.StringVar(self, value=initial_mode),
-            color_mode=tk.StringVar(self, value=self.color_mode),
-            color_left=tk.StringVar(self, value=backlight.color_left.capitalize()),
-            color_center=tk.StringVar(self, value=backlight.color_center.capitalize()),
-            color_right=tk.StringVar(self, value=backlight.color_right.capitalize()),
-            color_extra=tk.StringVar(self, value=backlight.color_extra.capitalize())
-        )
+        self.values = {
+            'mode': tk.StringVar(self, value=initial_mode),
+            'color_mode': tk.StringVar(self, value=self.color_mode),
+            'color_left': tk.StringVar(self, value=backlight.color_left.capitalize()),
+            'color_center': tk.StringVar(self, value=backlight.color_center.capitalize()),
+            'color_right': tk.StringVar(self, value=backlight.color_right.capitalize()),
+            'color_extra': tk.StringVar(self, value=backlight.color_extra.capitalize())
+        }
 
         def set_single_color(color):
             if not color == 'Select...':
                 self.color = color
 
-        self.widgets = dict(
-            mode=ttk.OptionMenu(
+        self.widgets = {
+            'mode': ttk.OptionMenu(
                 self.bg_frame,
                 self.values['mode'],
                 None,
                 *backlight.display_modes(),
                 command=self.on_mode_switch
             ),
-            color=ttk.OptionMenu(
+            'color': ttk.OptionMenu(
                 self.bg_frame,
                 self.values['color_left'],
                 self.color_left,
                 *backlight.display_colors(),
                 command=set_single_color
             ),
-            color_mode=dict(frame=ttk.Frame(self.bg_frame)),
-            color_left=ttk.OptionMenu(
+            'color_mode': {'frame':ttk.Frame(self.bg_frame)},
+            'color_left': ttk.OptionMenu(
                 self.bg_frame,
                 self.values['color_left'],
                 self.color_left,
                 *backlight.display_colors(),
                 command=self.color_setter('left')
             ),
-            color_center=ttk.OptionMenu(
+            'color_center': ttk.OptionMenu(
                 self.bg_frame,
                 self.values['color_center'],
                 backlight.color_center.capitalize(),
                 *backlight.display_colors(),
                 command=self.color_setter('center')
             ),
-            color_right=ttk.OptionMenu(
+            'color_right': ttk.OptionMenu(
                 self.bg_frame,
                 self.values['color_right'],
                 backlight.color_right.capitalize(),
                 *backlight.display_colors(),
                 command=self.color_setter('right')
             ),
-            color_extra=ttk.OptionMenu(
+            'color_extra': ttk.OptionMenu(
                 self.bg_frame,
                 self.values['color_extra'],
                 backlight.color_extra.capitalize(),
                 *backlight.display_colors(),
                 command=self.color_setter('extra')
             )
-        )
+        }
 
-        self.widgets['color_mode']['options'] = (
+        def cmd():
+            self.on_color_mode_switch(self.values['color_mode'].get())
+
+        self.widgets['color_mode']['options']=(
             ttk.Radiobutton(
                 self.widgets['color_mode']['frame'],
                 variable=self.values['color_mode'],
                 text='Single', value='single',
-                command=lambda: self.on_color_mode_switch(self.values['color_mode'].get())
+                command=cmd
             ),
             ttk.Radiobutton(
                 self.widgets['color_mode']['frame'],
                 variable=self.values['color_mode'],
                 text='Multiple', value='multiple',
-                command=lambda: self.on_color_mode_switch(self.values['color_mode'].get())
+                command=cmd
             )
         )
 
-        menuconfig = dict(
-            relief=tk.FLAT,
-            background=App.bgcolor,
-            activebackground=App.shcolor,
-            activeborderwidth=0,
-            foreground=App.fgcolor,
-            bd=0,
-            activeforeground=App.hlcolor
-        )
+        menuconfig = {
+            'relief': tk.FLAT,
+            'background': App.bgcolor,
+            'activebackground': App.shcolor,
+            'activeborderwidth': 0,
+            'foreground': App.fgcolor,
+            'bd': 0,
+            'activeforeground': App.hlcolor
+        }
 
         self.widgets['mode']['menu'].config(**menuconfig)
         self.widgets['color']['menu'].config(**menuconfig)
