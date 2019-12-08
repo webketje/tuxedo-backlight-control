@@ -59,8 +59,8 @@ Development of this software is done on Clevo N150-ZU / N151-ZU. Only single col
 
 Required packages: 
 
-* On **Debian/ Ubuntu/ Linux Mint** : python3, python3-tk & policykit-1.
-* On **Arch Linux** : python, tk, polkit
+* On **Debian / Ubuntu / Linux Mint** : python3, python3-tk & policykit-1.
+* On **Arch Linux / Manjaro** : python, tk, polkit
 
 On Debian you can verify if you have these by doing `apt show <package-name>`.  
 
@@ -76,11 +76,11 @@ Follow the instructions at [tuxedo-keyboard under the section "The DKMS route"](
 
 ## Alternative options
 
-### On Arch Linux:
+### On Arch Linux / Manjaro:
 
 You can install the ["tuxedo-keyboard"](https://aur.archlinux.org/packages/tuxedo-keyboard/ "TUXEDO Keyboard AUR Package") Package from the AUR
 
-### On Ubuntu (Linux Mint and Debian are not tested)
+### On Ubuntu (Linux Mint and Debian are not tested):
 
 You can download and install the TUXEDO Keyboard .deb Package from http://deb.tuxedocomputers.com/ubuntu/pool/main/t/tuxedo-keyboard-dkms/
 
@@ -129,23 +129,23 @@ ln -s -f -T /usr/share/tuxedo-backlight-control/backlight.py /usr/local/bin/back
 
 
 
-## Uninstall
+## Uninstall:
 
 *Note: You might have to execute some of the commands below with `sudo`*
 
-### Debian
+### Debian:
 
 ```
 dpkg -r tuxedo-backlight-control
 ```
 
-### Arch Linux
+### Arch Linux / Manajro:
 
 ```
 pacman -Rs tuxedo-backlight-control
 ```
 
-### Manual
+### Manual:
 
 ```
 rm -rf /usr/share/tuxedo-backlight-control
