@@ -2,6 +2,7 @@
 
 import os
 import re
+
 from colors import colors
 
 if os.path.isfile('/etc/tuxedo-backlight-control/colors.conf'):
@@ -18,6 +19,7 @@ class BacklightControl():
 
     DEVICE_PATH = '/sys/devices/platform/tuxedo_keyboard/'
     MODULE_PATH = '/sys/module/tuxedo_keyboard'
+    VERSION = '0.7'
 
     modes = (
         'color',

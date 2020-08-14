@@ -23,6 +23,8 @@ backlight <command> [<option>]
 Usage:
     -h, --help            Display this message
 
+    -v, --version         Display app version
+
     ui                    Start the TUXEDO Backlight Control UI
 
     off                   Turn off keyboard backlight
@@ -33,8 +35,8 @@ Usage:
     color  <color>{1,4}   Set the keyboard backlight to a single color, one of:
                           white, silver, gray, yellow, orange, red, maroon, crimson,
                           fuchsia, purple, rose, cyan, turquoise, teal, blue, navy,
-                          olive, lime, green,
-                          OR any valid colors defined in /etc/tuxedo-backlight-control/colors.conf
+                          olive, lime, green, OR any valid color_name=hex_value pairs
+                          defined in /etc/tuxedo-backlight-control/colors.conf
 
                           Alternatively, set the keyboard to 4 distinct colors,
                           in the order: left, center, right, extra. Only regions supported
@@ -94,7 +96,7 @@ You can download and install the TUXEDO Keyboard .deb Package from http://deb.tu
 
 Download and double-click the `.deb` package from the [releases](https://github.com/webketje/tuxedo-backlight-control/releases/latest), or run
 ```
-sudo dpkg -i tuxedo-backlight-control_0.5-1_amd64.deb
+sudo dpkg -i tuxedo-backlight-control_0.7-1_amd64.deb
 ```
 from the folder where you downloaded it.
 
@@ -103,7 +105,7 @@ from the folder where you downloaded it.
 Download the `.pkg.tar.xz` package from the [releases](https://github.com/webketje/tuxedo-backlight-control/releases/latest), and run
 
 ```
-pacman -U tuxedo-backlight-control-0.5-1.pkg.tar.xz
+pacman -U tuxedo-backlight-control-0.7-1.pkg.tar.xz
 ```
 from the folder where you downloaded it.
 
