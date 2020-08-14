@@ -19,6 +19,7 @@ package() {
   install -Dm644 "${srcdir}/tuxedo-backlight-control/src/usr/share/applications/tuxedo-backlight-control.desktop" "${pkgdir}/usr/share/applications/tuxedo-backlight-control.desktop"
   install -D "${srcdir}/tuxedo-backlight-control/src/usr/share/tuxedo-backlight-control/ui.py" "${pkgdir}/usr/share/tuxedo-backlight-control/ui.py"
   install -D "${srcdir}/tuxedo-backlight-control/src/usr/share/tuxedo-backlight-control/backlight.py" "${pkgdir}/usr/share/tuxedo-backlight-control/backlight.py"
+  install -D "${srcdir}/tuxedo-backlight-control/src/usr/share/tuxedo-backlight-control/backlight_control.py" "${pkgdir}/usr/share/tuxedo-backlight-control/backlight_control.py"
   install -D "${srcdir}/tuxedo-backlight-control/src/usr/share/tuxedo-backlight-control/icon.png" "${pkgdir}/usr/share/tuxedo-backlight-control/icon.png"
   install -D "${srcdir}/tuxedo-backlight-control/src/usr/share/tuxedo-backlight-control/colors.py" "${pkgdir}/usr/share/tuxedo-backlight-control/colors.py"
 }
