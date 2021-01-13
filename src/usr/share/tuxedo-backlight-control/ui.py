@@ -28,9 +28,10 @@ class App(ttk.Frame):
         self.regions = (
             'color_left',
             'color_center',
-            'color_right',
-            'color_extra'
+            'color_right'
         )
+        if backlight.color_extra:
+        	self.regions.append('color_extra')
 
         self.bg_frame = ttk.Frame(self.parent)
         self.bg_frame.grid(sticky=tk.NSEW, column=0, row=0)
@@ -65,8 +66,9 @@ class App(ttk.Frame):
             'color_left': tk.StringVar(self, value=backlight.color_left.capitalize()),
             'color_center': tk.StringVar(self, value=backlight.color_center.capitalize()),
             'color_right': tk.StringVar(self, value=backlight.color_right.capitalize()),
-            'color_extra': tk.StringVar(self, value=backlight.color_extra.capitalize())
         }
+        if backlight.color_extra:
+        	self.values.color_extra = tk.StringVar(self, value=backlight.color_extra.capitalize())
 
         def set_single_color(color):
             if not color == 'Select...':
@@ -108,15 +110,16 @@ class App(ttk.Frame):
                 backlight.color_right.capitalize(),
                 *backlight.display_colors(),
                 command=self.color_setter('right')
-            ),
-            'color_extra': ttk.OptionMenu(
+            )
+        }
+        if backlight.color_extra:
+            self.widgets.color_extra: ttk.OptionMenu(
                 self.bg_frame,
                 self.values['color_extra'],
                 backlight.color_extra.capitalize(),
                 *backlight.display_colors(),
                 command=self.color_setter('extra')
             )
-        }
 
         def cmd():
             self.on_color_mode_switch(self.values['color_mode'].get())
@@ -151,7 +154,9 @@ class App(ttk.Frame):
         self.widgets['color_left']['menu'].config(**menuconfig)
         self.widgets['color_center']['menu'].config(**menuconfig)
         self.widgets['color_right']['menu'].config(**menuconfig)
-        self.widgets['color_extra']['menu'].config(**menuconfig)
+        
+        if backlight.color_extra:
+            self.widgets['color_extra']['menu'].config(**menuconfig)
 
         self.labels['mode'].grid(column=0, row=0, sticky='EW')
         self.widgets['mode'].grid(column=1, row=0, sticky='EW', padx=10)
