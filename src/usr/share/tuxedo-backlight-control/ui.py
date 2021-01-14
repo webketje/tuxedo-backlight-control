@@ -1,7 +1,7 @@
 #!/usr/bin/pkexec /usr/bin/python3
 
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, HORIZONTAL
 from backlight_control import backlight
 
 
@@ -47,6 +47,7 @@ class App(ttk.Frame):
 
         self.labels = {
             'mode': ttk.Label(self.bg_frame, text='Backlight mode: '),
+            'brightness': ttk.Label(self.bg_frame, text='Brightness: '),
             'color': ttk.Label(self.bg_frame, text='Backlight color: '),
             'color_mode': ttk.Label(self.bg_frame, text='Color mode: '),
             'color_left': ttk.Label(self.bg_frame, text='Color left: '),
@@ -62,6 +63,7 @@ class App(ttk.Frame):
 
         self.values = {
             'mode': tk.StringVar(self, value=initial_mode),
+            'brightness': tk.StringVar(self, value=backlight.get_device_param('brightness')),
             'color_mode': tk.StringVar(self, value=self.color_mode),
             'color_left': tk.StringVar(self, value=backlight.color_left.capitalize()),
             'color_center': tk.StringVar(self, value=backlight.color_center.capitalize()),
@@ -81,6 +83,13 @@ class App(ttk.Frame):
                 None,
                 *backlight.display_modes(),
                 command=self.on_mode_switch
+            ),
+            'brightness': ttk.Scale(
+                self.bg_frame,
+                from_ = 1,
+                to_ = 255,
+                orient=HORIZONTAL,
+                command=self.on_brightness_change
             ),
             'color': ttk.OptionMenu(
                 self.bg_frame,
@@ -160,6 +169,10 @@ class App(ttk.Frame):
 
         self.labels['mode'].grid(column=0, row=0, sticky='EW')
         self.widgets['mode'].grid(column=1, row=0, sticky='EW', padx=10)
+
+        self.labels['brightness'].grid(column=0, row=1, sticky='EW')
+        self.widgets['brightness'].grid(column=1, row=1, sticky='EW', padx=10)
+
         self.init_footer()
 
         if backlight.state == 1:
@@ -247,18 +260,10 @@ class App(ttk.Frame):
 
     def init_color_mode_radio(self):
         self.values['color_mode'].set(self.color_mode)
-        self.labels['color_mode'].grid(row=1, column=0, sticky=tk.EW)
-        self.widgets['color_mode']['frame'].grid(row=1, column=1, sticky=tk.EW)
-        self.widgets['color_mode']['options'][0].grid(
-            row=1,
-            column=0,
-            sticky=tk.EW
-        )
-        self.widgets['color_mode']['options'][1].grid(
-            row=1,
-            column=1,
-            sticky=tk.EW
-        )
+        self.labels['color_mode'].grid(row=2, column=0, sticky=tk.EW)
+        self.widgets['color_mode']['frame'].grid(row=2, column=1, sticky=tk.EW)
+        self.widgets['color_mode']['options'][0].grid(row=2, column=0, sticky=tk.EW)
+        self.widgets['color_mode']['options'][1].grid(row=2, column=1, sticky=tk.EW)
 
     def on_color_mode_switch(self, value):
         if value == 'multiple':
@@ -271,12 +276,12 @@ class App(ttk.Frame):
             self.init_single_color()
 
     def init_single_color(self):
-        self.labels['color'].grid(column=0, row=2, sticky='EW')
-        self.widgets['color'].grid(column=1, row=2, sticky='EW', padx=10)
+        self.labels['color'].grid(column=0, row=3, sticky='EW')
+        self.widgets['color'].grid(column=1, row=3, sticky='EW', padx=10)
 
     def init_multiple_colors(self):
         for index, region in enumerate(self.regions):
-            row = index + 2
+            row = index + 3
             from_device = getattr(backlight, region)
             self.labels[region].grid(column=0, row=row, sticky='EW')
             self.values[region].set(from_device.capitalize())
@@ -293,6 +298,9 @@ class App(ttk.Frame):
         self.off_button.configure(state='enabled')
         self.init_mode(value.lower())
         self.mode = value
+
+    def on_brightness_change(self, value):
+        backlight.set_device_param('brightness', int(float(value)))
 
     @property
     def mode(self):
