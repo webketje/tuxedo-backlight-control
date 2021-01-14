@@ -351,6 +351,33 @@ class App(ttk.Frame):
         )
         self.off_button.grid(sticky=tk.E, column=1, row=6, padx=10, pady=10)
 
+        self.save_button = ttk.Button(
+            self.bg_frame,
+            text="Apply on boot",
+            command=self.save_module_params
+        )
+        self.save_button.grid(sticky=tk.E, column=1, row=7, padx=10, pady=10)
+
+    def save_module_params(self):
+        mode = backlight.get_device_param('mode')
+        brightness = backlight.get_device_param('brightness')
+        hex_left = "0x" + backlight.get_device_param('color_left')
+        hex_center = "0x" + backlight.get_device_param('color_center')
+        hex_right = "0x" + backlight.get_device_param('color_right')
+        state = backlight.get_device_param('state')
+
+        moduleString = f"options tuxedo-keyboard mode={mode} brightness={brightness} color_left={hex_left} color_center={hex_center} color_right={hex_right} state={state}"
+        if backlight.color_extra:
+            hex_extra = "0x" + backlight.get_device_param('color_extra')
+            moduleString = f"options tuxedo-keyboard mode={mode} brightness={brightness} color_left={hex_left} color_center={hex_center} color_right={hex_right} color_extra={hex_extra} state={state}"
+        
+        moduleFile="/etc/modprobe.d/tuxedo_keyboard.conf"
+        f = open(moduleFile, "w")
+        f.write(moduleString)
+        f.close()
+
+        ttk.Label(text="Written to " + moduleFile).grid(row=8)
+
 
 def init():
     root = tk.Tk()
