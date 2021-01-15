@@ -359,16 +359,16 @@ class App(ttk.Frame):
         self.save_button.grid(sticky=tk.E, column=1, row=7, padx=10, pady=10)
 
     def save_module_params(self):
-        mode = backlight.get_device_param('mode')
-        brightness = backlight.get_device_param('brightness')
-        hex_left = "0x" + backlight.get_device_param('color_left')
-        hex_center = "0x" + backlight.get_device_param('color_center')
-        hex_right = "0x" + backlight.get_device_param('color_right')
-        state = backlight.get_device_param('state')
+        mode = backlight.get_device_param('mode').rstrip()
+        brightness = backlight.get_device_param('brightness').rstrip()
+        hex_left = "0x" + backlight.get_device_param('color_left').rstrip().upper()
+        hex_center = "0x" + backlight.get_device_param('color_center').rstrip().upper()
+        hex_right = "0x" + backlight.get_device_param('color_right').rstrip().upper()
+        state = backlight.get_device_param('state').rstrip()
 
         moduleString = f"options tuxedo-keyboard mode={mode} brightness={brightness} color_left={hex_left} color_center={hex_center} color_right={hex_right} state={state}"
         if backlight.color_extra:
-            hex_extra = "0x" + backlight.get_device_param('color_extra')
+            hex_extra = "0x" + backlight.get_device_param('color_extra').rstrip().upper()
             moduleString = f"options tuxedo-keyboard mode={mode} brightness={brightness} color_left={hex_left} color_center={hex_center} color_right={hex_right} color_extra={hex_extra} state={state}"
         
         moduleFile="/etc/modprobe.d/tuxedo_keyboard.conf"
