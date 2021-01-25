@@ -31,7 +31,7 @@ class App(ttk.Frame):
             'color_right'
         )
         if backlight.color_extra:
-        	self.regions.append('color_extra')
+        	self.regions = self.regions + ('color_extra',)
 
         self.bg_frame = ttk.Frame(self.parent)
         self.bg_frame.grid(sticky=tk.NSEW, column=0, row=0)
@@ -65,10 +65,10 @@ class App(ttk.Frame):
             'color_mode': tk.StringVar(self, value=self.color_mode),
             'color_left': tk.StringVar(self, value=backlight.color_left.capitalize()),
             'color_center': tk.StringVar(self, value=backlight.color_center.capitalize()),
-            'color_right': tk.StringVar(self, value=backlight.color_right.capitalize()),
+            'color_right': tk.StringVar(self, value=backlight.color_right.capitalize())
         }
         if backlight.color_extra:
-        	self.values.color_extra = tk.StringVar(self, value=backlight.color_extra.capitalize())
+        	self.values['color_extra'] = tk.StringVar(self, value=backlight.color_extra.capitalize())
 
         def set_single_color(color):
             if not color == 'Select...':
@@ -113,7 +113,7 @@ class App(ttk.Frame):
             )
         }
         if backlight.color_extra:
-            self.widgets.color_extra: ttk.OptionMenu(
+            self.widgets['color_extra'] = ttk.OptionMenu(
                 self.bg_frame,
                 self.values['color_extra'],
                 backlight.color_extra.capitalize(),
