@@ -34,7 +34,7 @@ class BacklightControl():
 
     colors = colors
     regions = ('left', 'center', 'right', 'extra')
-    params = ('state', 'mode', 'color_left', 'color_center', 'color_right', 'color_extra')
+    params = ('state', 'mode', 'color_left', 'color_center', 'color_right', 'color_extra', 'brightness')
 
     @staticmethod
     def get_device_param(prop):
@@ -165,6 +165,17 @@ class BacklightControl():
     def color_extra(self, value):
         """ set hex code for color_extra, with color name present in colors dict """
         self.set_device_param('color_extra', self.find_color_by_key(value))
+
+    @property
+    def brightness(self):
+        """ get brightness value """
+        return self.get_device_color('extra')
+
+    @color_extra.setter
+    def color_extra(self, value):
+        """ set hex code for color_extra, with color name present in colors dict """
+        self.set_device_param('color_extra', self.find_color_by_key(value))
+
 
     @staticmethod
     def display_modes():
