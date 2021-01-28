@@ -5,7 +5,7 @@ else
 fi
 
 pkg='tuxedo-backlight-control'
-ver='0.7'
+ver='0.9'
 maintainer='Kevin Van Lierde <kevin.van.lierde@gmail.com>'
 url='https://github.com/webketje/tuxedo-backlight-control'
 prerm='../build/DEBIAN/prerm'
@@ -38,7 +38,7 @@ fpm -s dir\
   --depends policykit-1\
   --after-install "$postinst"\
   --before-remove "$prerm"\
-  usr
+  usr etc
 
 mv "${pkg}_$ver-1_amd64.deb" "../dist/${pkg}_$ver-1_amd64.deb"
 
@@ -62,7 +62,7 @@ fpm -s dir\
   --depends polkit\
   --after-install "$postinst"\
   --before-remove "$prerm"\
-  usr
+  usr etc
 
 mv "$pkg-$ver-1-any.pkg.tar.xz" "../dist/$pkg-$ver-1-any.pkg.tar.xz"
 
@@ -86,6 +86,6 @@ fpm -s dir\
   --depends polkit\
   --after-install "$postinst"\
   --before-remove "$prerm"\
-  usr
+  usr etc
 
 mv "$pkg-$ver-1.any.rpm" "../dist/$pkg-$ver-1.any.rpm"
