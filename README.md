@@ -43,6 +43,8 @@ Usage:
                           Alternatively, set the keyboard to 4 distinct colors,
                           in the order: left, center, right, extra. Only regions supported
                           by your keyboard will have effect.
+
+    brightness            Set keyboard backlight brightness from 0-255
 ```
 
 ### Custom Colors
@@ -63,7 +65,7 @@ Development of this software is done on Clevo N150-ZU / N151-ZU. Only single col
 
 Required packages: 
 
-* On **Debian / Ubuntu / Linux Mint** : python3, python3-tk & policykit-1.
+* On **Debian / Ubuntu / Linux Mint / PopOS** : python3, python3-tk & policykit-1.
 * On **Arch Linux / Manjaro** : python, tk, polkit
 
 On Debian you can verify if you have these by doing `apt show <package-name>`.  
@@ -94,7 +96,7 @@ You can download and install the TUXEDO Keyboard .deb Package from http://deb.tu
 
 *Note: You might have to execute some of the commands below with `sudo`*
 
-### Debian
+### Debian & derivatives (Ubuntu, Linux Mint, PopOS, ...)
 
 Download and double-click the `.deb` package from the [releases](https://github.com/webketje/tuxedo-backlight-control/releases/latest), or run
 ```
@@ -102,7 +104,7 @@ dpkg -i tuxedo-backlight-control_0.7-1_amd64.deb
 ```
 from the folder where you downloaded it.
 
-### Arch Linux
+### Arch Linux / Manjaro
 
 Download the `.pkg.tar.xz` package from the [releases](https://github.com/webketje/tuxedo-backlight-control/releases/latest), and run
 
@@ -131,8 +133,6 @@ cp -r usr /usr
 ln -s -f -T /usr/share/tuxedo-backlight-control/backlight.py /usr/local/bin/backlight
 ```
 
-
-
 ## Uninstall:
 
 *Note: You might have to execute some of the commands below with `sudo`*
@@ -143,7 +143,7 @@ ln -s -f -T /usr/share/tuxedo-backlight-control/backlight.py /usr/local/bin/back
 dpkg -r tuxedo-backlight-control
 ```
 
-### Arch Linux / Manajro:
+### Arch Linux / Manjaro:
 
 ```
 pacman -Rs tuxedo-backlight-control
@@ -157,6 +157,7 @@ unlink /usr/local/bin/backlight
 unlink /usr/share/doc/tuxedo-backlight-control/copyright
 unlink /usr/share/applications/tuxedo-backlight-control.desktop
 unlink /usr/share/polkit-1/actions/webketje.tuxedo-backlight-control.policy
+unlink /etc/bash_completion.d/backlight
 ```
 
 

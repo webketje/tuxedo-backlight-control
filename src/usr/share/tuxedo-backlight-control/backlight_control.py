@@ -59,8 +59,8 @@ class BacklightControl():
 
     @staticmethod
     def set_device_param(prop:str, value:str):
-        fh = open(BacklightControl.DEVICE_PATH + prop, mode='r+')
-        fh.write(str(value))
+        fh = open(BacklightControl.DEVICE_PATH + prop, mode='w')
+        fh.write(value)
         fh.close()
 
     @staticmethod
@@ -187,4 +187,3 @@ class BacklightControl():
         return map(BacklightControl.capitalize, BacklightControl.colors.keys())
 
 backlight = BacklightControl()
-
