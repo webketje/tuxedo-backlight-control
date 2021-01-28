@@ -5,7 +5,7 @@ else
 fi
 
 pkg='tuxedo-backlight-control'
-ver='0.9'
+ver='0.7'
 maintainer='Kevin Van Lierde <kevin.van.lierde@gmail.com>'
 url='https://github.com/webketje/tuxedo-backlight-control'
 prerm='../build/DEBIAN/prerm'

@@ -34,10 +34,10 @@ class BacklightControl():
 
     colors = colors
     regions = ('left', 'center', 'right', 'extra')
-    params = ('state', 'mode', 'color_left', 'color_center', 'color_right', 'color_extra')
+    params = ('state', 'mode', 'color_left', 'color_center', 'color_right', 'color_extra', 'brightness')
 
     @staticmethod
-    def get_device_param(prop):
+    def get_device_param(prop:str):
         """ read driver param value directly from '/sys/devices/platform/tuxedo_keyboard/' """
 
         if os.path.isfile(BacklightControl.DEVICE_PATH + prop):
@@ -45,7 +45,7 @@ class BacklightControl():
         return None
 
     @staticmethod
-    def get_device_color(region):
+    def get_device_color(region:str):
         """ read driver color value directly from '/sys/devices/platform/tuxedo_keyboard/' """
 
         color = BacklightControl.get_device_param('color_' + region)
@@ -58,20 +58,20 @@ class BacklightControl():
         return None
 
     @staticmethod
-    def set_device_param(prop, value):
+    def set_device_param(prop:str, value:str):
         fh = open(BacklightControl.DEVICE_PATH + prop, mode='r+')
         fh.write(str(value))
         fh.close()
 
     @staticmethod
-    def set_device_color(region, color):
+    def set_device_color(region:str, color:str):
         if color in BacklightControl.colors.keys():
             index = list(BacklightControl.colors.values()).index(color.strip().upper())
             values = list(BacklightControl.colors.keys())
             BacklightControl.set_device_param('color_' + region, values[index])
 
     @staticmethod
-    def find_color_by_key(color):
+    def find_color_by_key(color:str):
         index = list(BacklightControl.colors.keys()).index(color)
         return '0x' + list(BacklightControl.colors.values())[index]
 
@@ -92,14 +92,14 @@ class BacklightControl():
         return is_single
 
     @staticmethod
-    def set_single_color(color):
+    def set_single_color(color:str):
         """ assigns a single color by name to all keyboard regions """
         for region in BacklightControl.regions:
             mapped_color = BacklightControl.find_color_by_key(color)
             BacklightControl.set_device_param('color_' + region, mapped_color)
 
     @staticmethod
-    def capitalize(label):
+    def capitalize(label:str):
         """ capitalizes a string """
         return label.capitalize()
 
@@ -132,7 +132,7 @@ class BacklightControl():
         return self.get_device_color('left')
 
     @color_left.setter
-    def color_left(self, value):
+    def color_left(self, value:str):
         """ set hex code for color_left, with color name present in colors dict """
         self.set_device_param('color_left', self.find_color_by_key(value))
 
@@ -142,7 +142,7 @@ class BacklightControl():
         return self.get_device_color('center')
 
     @color_center.setter
-    def color_center(self, value):
+    def color_center(self, value:str):
         """ set hex code for color_center, with color name present in colors dict """
         self.set_device_param('color_center', self.find_color_by_key(value))
 
@@ -152,7 +152,7 @@ class BacklightControl():
         return self.get_device_color('right')
 
     @color_right.setter
-    def color_right(self, value):
+    def color_right(self, value:str):
         """ set hex code for color_right, with color name present in colors dict """
         self.set_device_param('color_right', self.find_color_by_key(value))
 
@@ -161,10 +161,20 @@ class BacklightControl():
         """ get hex code for color_extra """
         return self.get_device_color('extra')
 
-    @color_extra.setter
-    def color_extra(self, value):
+    @color_extra.setter 
+    def color_extra(self, value:str):
         """ set hex code for color_extra, with color name present in colors dict """
         self.set_device_param('color_extra', self.find_color_by_key(value))
+
+    @property
+    def brightness(self):
+        """ get brightness value """
+        return self.get_device_param('brightness')
+
+    @brightness.setter
+    def brightness(self, value:int):
+        """ set brightness value """
+        self.set_device_param('brightness', value)
 
     @staticmethod
     def display_modes():

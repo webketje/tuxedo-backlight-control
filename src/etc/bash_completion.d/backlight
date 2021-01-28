@@ -8,7 +8,7 @@ backlight-completion()
     prev="${COMP_WORDS[COMP_CWORD-1]}"
     cur="${COMP_WORDS[COMP_CWORD]}"
     colors="white silver gray yellow orange red maroon crimson fuchsia purple rose cyan turquoise teal blue navy olive lime green"
-    opts="ui off breathe cycle dance flash color random tempo wave -h --help"
+    opts="ui off breathe brightness cycle dance flash color random tempo wave -h --help"
 
 
     if [[ ${prev} == "color" ]] ; then
