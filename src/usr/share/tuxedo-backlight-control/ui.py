@@ -18,7 +18,7 @@ class App(ttk.Frame):
         ttk.Frame.__init__(self, parent)
         self.init_ttk_style()
         self.parent = parent
-        self.parent.title('Tuxedo Backlight Ctrl')
+        self.parent.title('Tuxedo Backlight Ctrl  v' + backlight.VERSION)
         self.parent.iconphoto(parent._w, tk.PhotoImage(file=self.ICONPATH))
         self.parent.resizable(width=False, height=False)
         self.parent.grid(widthInc=8, heightInc=8, baseHeight=5, baseWidth=40)
@@ -55,7 +55,7 @@ class App(ttk.Frame):
             'color_extra': ttk.Label(self.bg_frame, text='Color extra: ')
         }
 
-        if backlight.state == 1:
+        if backlight.state == 1 and not backlight.mode == None:
             initial_mode = backlight.mode.capitalize()
         else:
             initial_mode = 'Select...'

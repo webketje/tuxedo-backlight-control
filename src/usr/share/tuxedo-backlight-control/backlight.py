@@ -38,14 +38,19 @@ if __name__ == "__main__":
         exit(error_no_driver())
 
     colorlist = list(BacklightControl.colors.keys())
+
     if cmd == "ui":
         from ui import init
-
         init()
         exit()
-    elif cmd == "off":
+
+    if cmd == "off":
         backlight.state = 0
         exit()
+
+    if len(argv) == 2 and cmd in backlight.modes:
+        backlight.state = 1
+        backlight.mode = cmd
 
     if len(argv) < 3:
         exit(error_missing_arg(cmd))
@@ -61,9 +66,6 @@ if __name__ == "__main__":
             exit(error_invalid_brightness(arg))
 
         backlight.brightness = arg
-    elif len(argv) == 2 and cmd in backlight.modes:
-        backlight.state = 1
-        backlight.mode = cmd
     elif len(argv) == 3 and cmd == "color" and arg in colorlist:
         backlight.state = 1
         backlight.set_single_color(arg)

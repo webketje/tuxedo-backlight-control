@@ -111,8 +111,8 @@ class BacklightControl():
         return 1
 
     @state.setter
-    def state(self, value):
-        self.set_device_param('state', value)
+    def state(self, value:int):
+        self.set_device_param('state', str(value))
 
     @property
     def mode(self):
@@ -122,9 +122,9 @@ class BacklightControl():
         return None
 
     @mode.setter
-    def mode(self, value):
+    def mode(self, value:str):
         index = self.modes.index(value)
-        self.set_device_param('mode', index)
+        self.set_device_param('mode', str(index))
 
     @property
     def color_left(self):
