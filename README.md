@@ -115,7 +115,7 @@ from the folder where you downloaded it.
 
 _Note: Although it is not recommended, you **can** install dpkg on Arch Linux, and install the .deb package there as you would on Debian OS'es._
 
-Alternatively, you can use the [AUR Package](https://aur.archlinux.org/packages/tuxedo-backlight-control/) from [Steven Seifried](https://github.com/StevenSeifried/)
+Alternatively, you can use the [AUR Package](https://aur.archlinux.org/packages/tuxedo-backlight-control-git/) from [Steven Seifried](https://github.com/StevenSeifried/)
 
 ### Manual
 
@@ -146,7 +146,7 @@ dpkg -r tuxedo-backlight-control
 ### Arch Linux / Manjaro:
 
 ```
-pacman -Rs tuxedo-backlight-control
+pacman -Rs tuxedo-backlight-control-git
 ```
 
 ### Manual:
