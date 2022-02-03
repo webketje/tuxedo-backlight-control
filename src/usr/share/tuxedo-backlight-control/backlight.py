@@ -65,7 +65,7 @@ if __name__ == "__main__":
         if arg > 255 or arg < 0:
             exit(error_invalid_brightness(arg))
 
-        backlight.brightness = arg
+        backlight.brightness = str(arg)
     elif len(argv) == 3 and cmd == "color" and arg in colorlist:
         backlight.state = 1
         backlight.set_single_color(arg)
