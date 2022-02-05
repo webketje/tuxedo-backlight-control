@@ -29,7 +29,11 @@ def set_brightness(args):
     BacklightControl.brightness = args.value
 
 colorlist = BacklightControl.colors.keys()
-parser = argparse.ArgumentParser(prog='backlight', description='<tuxedo-backlight-control> - v0.7 - 2020-08-14, by Kevin Van Lierde <kevin.van.lierde@gmail.com>')
+parser = argparse.ArgumentParser(
+    prog='backlight',
+    description='<tuxedo-backlight-control> - v0.7 - 2020-08-14, by Kevin Van Lierde <kevin.van.lierde@gmail.com>',
+    epilog="""Report bugs at https://github.com/webketje/tuxedo-backlight-control/issues.\n
+For info on the tuxedo_keyboard kernel module, see https://github.com/tuxedocomputers/tuxedo-keyboard""")
 subparsers = parser.add_subparsers()
 
 colorparser = subparsers.add_parser('color',
