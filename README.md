@@ -100,7 +100,7 @@ You can download and install the TUXEDO Keyboard .deb Package from http://deb.tu
 
 Download and double-click the `.deb` package from the [releases](https://github.com/webketje/tuxedo-backlight-control/releases/latest), or run
 ```
-dpkg -i tuxedo-backlight-control_0.7-1_amd64.deb
+dpkg -i tuxedo-backlight-control_0.8.0-1_amd64.deb
 ```
 from the folder where you downloaded it.
 
@@ -109,7 +109,7 @@ from the folder where you downloaded it.
 Download the `.pkg.tar.xz` package from the [releases](https://github.com/webketje/tuxedo-backlight-control/releases/latest), and run
 
 ```
-pacman -U tuxedo-backlight-control-0.7-1.pkg.tar.xz
+pacman -U tuxedo-backlight-control-0.8.0-1.pkg.tar.xz
 ```
 from the folder where you downloaded it.
 
@@ -160,4 +160,20 @@ unlink /usr/share/polkit-1/actions/webketje.tuxedo-backlight-control.policy
 unlink /etc/bash_completion.d/backlight
 ```
 
+
+#### Maintenance
+
+**Test locally**
+
+The `backlight` utility can be run directly from the repo root as `$PWD/src/usr/share/tuxedo-backlight-control/backlight.py` for quick tests
+
+**Run pylint**
+
+Run `bin/pylint`
+
+**Create a new release**
+
+1. Change all references to &lt;version&gt; (readme, python, help)
+2. Run `bin/pack`
+3. Create release on GH and attach to generated archives in `dist`
 

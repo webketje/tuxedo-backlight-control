@@ -19,7 +19,7 @@ class BacklightControl():
 
     DEVICE_PATH = '/sys/devices/platform/tuxedo_keyboard/'
     MODULE_PATH = '/sys/module/tuxedo_keyboard'
-    VERSION = '0.7'
+    VERSION = '0.8.0'
 
     modes = (
         'color',

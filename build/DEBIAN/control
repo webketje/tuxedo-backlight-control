@@ -1,6 +1,6 @@
 Source: tuxedo-backlight-control
 Package: tuxedo-backlight-control
-Version: 0.6
+Version: 0.8.0
 Maintainer: Kevin Van Lierde <kevin.van.lierde@gmail.com>
 Architecture: all
 Description: Tuxedo Backlight Ctrl

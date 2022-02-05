@@ -1,5 +1,5 @@
 
-TUXEDO Backlight Control <tuxedo-backlight-control> - v0.7 - 2020-08-14
+TUXEDO Backlight Control <tuxedo-backlight-control> - v0.8.0 - 2022-02-05
 By Kevin Van Lierde <kevin.van.lierde@gmail.com>
 
 Usage:

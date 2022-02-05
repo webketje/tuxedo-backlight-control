@@ -5,7 +5,7 @@
 
 _pkgname='tuxedo-backlight-control'
 pkgname="${_pkgname}-git"
-pkgver=0.7.r14.gde724d7
+pkgver=0.8.0.r1.gde724d7
 pkgrel=2
 arch=('x86_64')
 license=('MIT')
