@@ -6,8 +6,8 @@ import re
 from colors import colors
 
 if os.path.isfile('/etc/tuxedo-backlight-control/colors.conf'):
-    colors_conf = open('/etc/tuxedo-backlight-control/colors.conf')
-    for line in colors_conf:
+    COLORS_CONF = open('/etc/tuxedo-backlight-control/colors.conf')
+    for line in COLORS_CONF:
         match = re.search('([\da-z_]+)=([\da-f]{6})', line)
         if match and len(match.groups()) == 2:
             colors[match.groups()[0]] = match.groups()[1]
@@ -34,10 +34,18 @@ class BacklightControl():
 
     colors = colors
     regions = ('left', 'center', 'right', 'extra')
-    params = ('state', 'mode', 'color_left', 'color_center', 'color_right', 'color_extra', 'brightness')
+    params = (
+        'state',
+        'mode',
+        'color_left',
+        'color_center',
+        'color_right',
+        'color_extra',
+        'brightness'
+    )
 
     @staticmethod
-    def get_device_param(prop:str):
+    def get_device_param(prop: str):
         """ read driver param value directly from '/sys/devices/platform/tuxedo_keyboard/' """
 
         if os.path.isfile(BacklightControl.DEVICE_PATH + prop):
@@ -45,7 +53,7 @@ class BacklightControl():
         return None
 
     @staticmethod
-    def get_device_color(region:str):
+    def get_device_color(region: str):
         """ read driver color value directly from '/sys/devices/platform/tuxedo_keyboard/' """
 
         color = BacklightControl.get_device_param('color_' + region)
@@ -58,20 +66,20 @@ class BacklightControl():
         return None
 
     @staticmethod
-    def set_device_param(prop:str, value:str):
-        fh = open(BacklightControl.DEVICE_PATH + prop, mode='w')
-        fh.write(value)
-        fh.close()
+    def set_device_param(prop: str, value: str):
+        filehandle = open(BacklightControl.DEVICE_PATH + prop, mode='w')
+        filehandle.write(value)
+        filehandle.close()
 
     @staticmethod
-    def set_device_color(region:str, color:str):
+    def set_device_color(region: str, color: str):
         if color in BacklightControl.colors.keys():
             index = list(BacklightControl.colors.values()).index(color.strip().upper())
             values = list(BacklightControl.colors.keys())
             BacklightControl.set_device_param('color_' + region, values[index])
 
     @staticmethod
-    def find_color_by_key(color:str):
+    def find_color_by_key(color: str):
         index = list(BacklightControl.colors.keys()).index(color)
         return '0x' + list(BacklightControl.colors.values())[index]
 
@@ -86,8 +94,7 @@ class BacklightControl():
             if last_color not in (None, color):
                 is_single = False
                 break
-            else:
-                last_color = color
+            last_color = color
 
         return is_single
 
@@ -99,7 +106,7 @@ class BacklightControl():
             BacklightControl.set_device_param('color_' + region, mapped_color)
 
     @staticmethod
-    def capitalize(label:str):
+    def capitalize(label: str):
         """ capitalizes a string """
         return label.capitalize()
 
@@ -111,7 +118,7 @@ class BacklightControl():
         return 1
 
     @state.setter
-    def state(self, value:int):
+    def state(self, value: int):
         self.set_device_param('state', str(value))
 
     @property
@@ -122,7 +129,7 @@ class BacklightControl():
         return None
 
     @mode.setter
-    def mode(self, value:str):
+    def mode(self, value: str):
         index = self.modes.index(value)
         self.set_device_param('mode', str(index))
 
@@ -132,7 +139,7 @@ class BacklightControl():
         return self.get_device_color('left')
 
     @color_left.setter
-    def color_left(self, value:str):
+    def color_left(self, value: str):
         """ set hex code for color_left, with color name present in colors dict """
         self.set_device_param('color_left', self.find_color_by_key(value))
 
@@ -142,7 +149,7 @@ class BacklightControl():
         return self.get_device_color('center')
 
     @color_center.setter
-    def color_center(self, value:str):
+    def color_center(self, value: str):
         """ set hex code for color_center, with color name present in colors dict """
         self.set_device_param('color_center', self.find_color_by_key(value))
 
@@ -152,7 +159,7 @@ class BacklightControl():
         return self.get_device_color('right')
 
     @color_right.setter
-    def color_right(self, value:str):
+    def color_right(self, value: str):
         """ set hex code for color_right, with color name present in colors dict """
         self.set_device_param('color_right', self.find_color_by_key(value))
 
@@ -161,8 +168,8 @@ class BacklightControl():
         """ get hex code for color_extra """
         return self.get_device_color('extra')
 
-    @color_extra.setter 
-    def color_extra(self, value:str):
+    @color_extra.setter
+    def color_extra(self, value: str):
         """ set hex code for color_extra, with color name present in colors dict """
         self.set_device_param('color_extra', self.find_color_by_key(value))
 
@@ -172,7 +179,7 @@ class BacklightControl():
         return self.get_device_param('brightness')
 
     @brightness.setter
-    def brightness(self, value:int):
+    def brightness(self, value: int):
         """ set brightness value """
         self.set_device_param('brightness', value)
 

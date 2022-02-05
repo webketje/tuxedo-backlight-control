@@ -1,0 +1,2 @@
+[MESSAGES CONTROL]
+disable=missing-docstring,anomalous-backslash-in-string,broad-except,too-many-instance-attributes,too-many-ancestors

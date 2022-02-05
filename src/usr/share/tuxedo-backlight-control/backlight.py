@@ -1,8 +1,7 @@
 #!/usr/bin/pkexec /usr/bin/python3
 
 import os
-import subprocess
-from sys import argv
+import sys
 
 from backlight_control import BacklightControl, backlight
 
@@ -23,53 +22,53 @@ def error_no_driver():
 
 
 if __name__ == "__main__":
-    if len(argv) == 1:
-        exit(error_missing_cmd())
+    if len(sys.argv) == 1:
+        sys.exit(error_missing_cmd())
 
-    cmd = argv[1]
-    if cmd == "--help" or cmd == "-h":
+    CMD = sys.argv[1]
+    if CMD in ("--help", "-h"):
         with open(sd + "/help.txt", "r") as fin:
-            exit(fin.read())
+            sys.exit(fin.read())
 
-    if cmd == "--version" or cmd == "-v":
-        exit(BacklightControl.VERSION)
+    if CMD in ("--version", "-v"):
+        sys.exit(BacklightControl.VERSION)
 
     if not os.path.isdir(BacklightControl.DEVICE_PATH):
-        exit(error_no_driver())
+        sys.exit(error_no_driver())
 
-    colorlist = list(BacklightControl.colors.keys())
+    COLOR_LIST = list(BacklightControl.colors.keys())
 
-    if cmd == "ui":
+    if CMD == "ui":
         from ui import init
         init()
-        exit()
+        sys.exit()
 
-    if cmd == "off":
+    if CMD == "off":
         backlight.state = 0
-        exit()
+        sys.exit()
 
-    if len(argv) == 2 and cmd in backlight.modes:
+    if len(sys.argv) == 2 and CMD in backlight.modes:
         backlight.state = 1
-        backlight.mode = cmd
+        backlight.mode = CMD
 
-    if len(argv) < 3:
-        exit(error_missing_arg(cmd))
+    if len(sys.argv) < 3:
+        sys.exit(error_missing_arg(CMD))
 
-    arg = argv[2]
-    if cmd == "brightness":
+    ARG = sys.argv[2]
+    if CMD == "brightness":
         backlight.state = 1
         try:
-            arg = int(arg)
+            ARG = int(ARG)
         except ValueError as error:
-            exit(error_invalid_brightness(arg))
-        if arg > 255 or arg < 0:
-            exit(error_invalid_brightness(arg))
+            sys.exit(error_invalid_brightness(ARG))
+        if ARG > 255 or ARG < 0:
+            sys.exit(error_invalid_brightness(ARG))
 
-        backlight.brightness = str(arg)
-    elif len(argv) == 3 and cmd == "color" and arg in colorlist:
+        backlight.brightness = str(ARG)
+    elif len(sys.argv) == 3 and CMD == "color" and ARG in COLOR_LIST:
         backlight.state = 1
-        backlight.set_single_color(arg)
-    elif len(argv) == 6:
+        backlight.set_single_color(ARG)
+    elif len(sys.argv) == 6:
         backlight.state = 1
         for index, region in enumerate(backlight.regions):
-            setattr(backlight, "color_" + region, argv[2 + index])
+            setattr(backlight, "color_" + region, sys.argv[2 + index])

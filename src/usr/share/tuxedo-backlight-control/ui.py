@@ -15,35 +15,20 @@ class App(ttk.Frame):
     shcolor = '#666666'  # shade
 
     def __init__(self, parent):
-        ttk.Frame.__init__(self, parent)
-        self.init_ttk_style()
         self.parent = parent
-        self.parent.title('Tuxedo Backlight Ctrl  v' + backlight.VERSION)
-        self.parent.iconphoto(parent._w, tk.PhotoImage(file=self.ICONPATH))
-        self.parent.resizable(width=False, height=False)
-        self.parent.grid(widthInc=8, heightInc=8, baseHeight=5, baseWidth=40)
-        self.parent.grid_columnconfigure(0, weight=1, pad=2)
-        self.parent.grid_rowconfigure(0, weight=1, pad=2)
+        self.init_tk_frame()
+        self.init_ttk_style()
 
         self.regions = (
             'color_left',
             'color_center',
             'color_right'
         )
-        if backlight.color_extra:
-        	self.regions = self.regions + ('color_extra',)
-
-        self.bg_frame = ttk.Frame(self.parent)
-        self.bg_frame.grid(sticky=tk.NSEW, column=0, row=0)
-        self.bg_frame.grid_columnconfigure(0, weight=1, minsize=150, pad=10)
-        self.bg_frame.grid_columnconfigure(1, weight=2, minsize=150, pad=10)
-        self.bg_frame.grid_rowconfigure(0, weight=0, pad=10)
-        self.bg_frame.grid_rowconfigure(1, weight=0, pad=10)
-        self.bg_frame.grid_rowconfigure(2, weight=0, pad=10)
-        self.bg_frame.grid_rowconfigure(6, weight=0, pad=0)
-
         for region in enumerate(self.regions):
             self.bg_frame.grid_rowconfigure(region[0] + 2, weight=0, pad=10)
+
+        if backlight.color_extra:
+            self.regions = self.regions + ('color_extra',)
 
         self.labels = {
             'mode': ttk.Label(self.bg_frame, text='Backlight mode: '),
@@ -55,7 +40,7 @@ class App(ttk.Frame):
             'color_extra': ttk.Label(self.bg_frame, text='Color extra: ')
         }
 
-        if backlight.state == 1 and not backlight.mode == None:
+        if backlight.state == 1 and not backlight.mode is None:
             initial_mode = backlight.mode.capitalize()
         else:
             initial_mode = 'Select...'
@@ -68,7 +53,8 @@ class App(ttk.Frame):
             'color_right': tk.StringVar(self, value=backlight.color_right.capitalize())
         }
         if backlight.color_extra:
-        	self.values['color_extra'] = tk.StringVar(self, value=backlight.color_extra.capitalize())
+            color_extra = tk.StringVar(self, value=backlight.color_extra.capitalize())
+            self.values['color_extra'] = color_extra
 
         def set_single_color(color):
             if not color == 'Select...':
@@ -124,7 +110,7 @@ class App(ttk.Frame):
         def cmd():
             self.on_color_mode_switch(self.values['color_mode'].get())
 
-        self.widgets['color_mode']['options']=(
+        self.widgets['color_mode']['options'] = (
             ttk.Radiobutton(
                 self.widgets['color_mode']['frame'],
                 variable=self.values['color_mode'],
@@ -154,7 +140,7 @@ class App(ttk.Frame):
         self.widgets['color_left']['menu'].config(**menuconfig)
         self.widgets['color_center']['menu'].config(**menuconfig)
         self.widgets['color_right']['menu'].config(**menuconfig)
-        
+
         if backlight.color_extra:
             self.widgets['color_extra']['menu'].config(**menuconfig)
 
@@ -166,6 +152,24 @@ class App(ttk.Frame):
             self.init_mode(backlight.mode)
         else:
             self.backlight_off()
+
+    def init_tk_frame(self):
+        ttk.Frame.__init__(self, self.parent)
+        self.parent.title('Tuxedo Backlight Ctrl  v' + backlight.VERSION)
+        self.parent.iconphoto(self.parent._w, tk.PhotoImage(file=self.ICONPATH))
+        self.parent.resizable(width=False, height=False)
+        self.parent.grid(widthInc=8, heightInc=8, baseHeight=5, baseWidth=40)
+        self.parent.grid_columnconfigure(0, weight=1, pad=2)
+        self.parent.grid_rowconfigure(0, weight=1, pad=2)
+
+        self.bg_frame = ttk.Frame(self.parent)
+        self.bg_frame.grid(sticky=tk.NSEW, column=0, row=0)
+        self.bg_frame.grid_columnconfigure(0, weight=1, minsize=150, pad=10)
+        self.bg_frame.grid_columnconfigure(1, weight=2, minsize=150, pad=10)
+        self.bg_frame.grid_rowconfigure(0, weight=0, pad=10)
+        self.bg_frame.grid_rowconfigure(1, weight=0, pad=10)
+        self.bg_frame.grid_rowconfigure(2, weight=0, pad=10)
+        self.bg_frame.grid_rowconfigure(6, weight=0, pad=0)
 
     def init_ttk_style(self):
         ttk_style = ttk.Style()
