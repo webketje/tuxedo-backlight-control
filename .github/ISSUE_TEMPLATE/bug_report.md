@@ -20,8 +20,9 @@ A clear and concise description of what the bug is: did it occur on a specific a
 
 **Describe your OS environment**
 * tuxedo-backlight-control version:  (run `backlight --version` and paste the result here)
+* which tuxedo_keyboard version is installed? (run `cat /sys/module/tuxedo_keyboard/version` and paste the result here)
 * Python version: (run `python --version` and paste the result here)
-* OS details:
+* OS details:)
   ```
   <run command "hostnamectl" (or "cat /etc/os-release") and paste the result here>
   ```
