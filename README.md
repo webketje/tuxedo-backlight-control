@@ -1,3 +1,6 @@
+> [!WARNING]
+> The main keyboard backlight drivers this software provides control to and depends on previously developed at https://github.com/tuxedocomputers/tuxedo-keyboard have been brought under https://gitlab.com/tuxedocomputers/development/packages/tuxedo-drivers. While it will still work with the versions documented here, you may prefer to follow a newer setup procedure with the newest drivers. Development of a new version is planned but on hold.
+
 # TUXEDO Backlight Control
 Minimal Linux distro CLI &amp; UI for TUXEDO / Clevo computers Keyboard Backlight
 
