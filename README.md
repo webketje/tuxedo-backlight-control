@@ -1,5 +1,5 @@
-> [!WARNING]
-> The main keyboard backlight drivers this software provides control to and depends on previously developed at https://github.com/tuxedocomputers/tuxedo-keyboard have been brought under https://gitlab.com/tuxedocomputers/development/packages/tuxedo-drivers. While it will still work with the versions documented here, you may prefer to follow a newer setup procedure with the newest drivers. Development of a new version is planned but on hold.
+> [!note]
+> This project is discontinued as tuxedocomputers released a superior, integrated [Tuxedo Control Center](https://github.com/tuxedocomputers/tuxedo-control-center). Debian users can add the apt repository [as described](https://www.tuxedocomputers.com/en/Add-TUXEDO-software-package-sources.tuxedo) and then run `apt install tuxedo-control-center`.
 
 # TUXEDO Backlight Control
 Minimal Linux distro CLI &amp; UI for TUXEDO / Clevo computers Keyboard Backlight
